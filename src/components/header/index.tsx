@@ -3,10 +3,10 @@ import { ReactNode } from "react";
 
 export const Header = ({ children }: { children: ReactNode }) => {
     return (
-        <header className="flex justify-between border-b-2 border-b-[#DEE2E6]">
+        <header className="flex justify-between border-b-2 border-b-[#DEE2E6]" id="header-top">
             <figure className="ml-[60px] my-[26.83px]">
                 <Image
-                    src="/MotorShopLogo.png"
+                    src="/assets/MotorShopLogo.png"
                     width={153}
                     height={26}
                     alt="Motor Shop"
