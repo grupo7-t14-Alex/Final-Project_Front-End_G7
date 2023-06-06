@@ -101,13 +101,13 @@ const cars = [
 ]
 
 
+
 export default function Home() {
   return (
-    <main>
+   <main>
       <header>
         <h1 className="flex justify-start border">Home Page</h1>
       </header>
-
       <div className="bg-gradient-to-b from-gray-500 to-gray-950 h-96 w-full relative">
         <img src="https://www.assobrav.com.br/wp-content/uploads/2020/07/porsche-911-turbo-2021-4.jpg" alt="Imagem ilustrativa carro porsche" className="w-full h-full object-cover absolute mix-blend-overlay" />
         <div className="h-full flex flex-col justify-center gap-5">
