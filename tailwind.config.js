@@ -7,7 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundColor:{
+      backgroundColor: {
         'brand-1': '#4529E6',
         'brand-2': '#5126EA',
         'brand-3': '#B0A6F0',
@@ -31,8 +31,8 @@ module.exports = {
         'random-11': '#5700E3',
         'random-12': '#30007D'
       },
-      colors:{
-        'gray':{
+      colors: {
+        'gray': {
           000: '#0B0D0D',
           100: '#212529',
           200: '#495057',
@@ -43,7 +43,7 @@ module.exports = {
           700: '#E9ECEF',
           800: '#F1F3F5',
           900: '#F8F9FA',
-          1000:'#FDFDFD'
+          1000: '#FDFDFD'
         },
         'brand-1': '#4529E6',
         'brand-2': '#5126EA',
@@ -68,8 +68,12 @@ module.exports = {
         'random-11': '#5700E3',
         'random-12': '#30007D'
 
+      },
+      width: {
+        19.5: 312,
+        28.125: 200,
       }
-      
+
     },
   },
   plugins: [],
