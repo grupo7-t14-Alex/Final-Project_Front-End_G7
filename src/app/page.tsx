@@ -119,9 +119,9 @@ export default function Home() {
       <div className="grid grid-rows-1 p-1 md:grid-cols-5">
         <aside className="flex flex-col w-full gap-2 p-1">
           {/* <h3 className="font-lexend text-base font-medium" >Filtro</h3> */}
-          <form class="hidden md:flex  flex-col bg-gray-100 rounded-md shadow-md gap-4 p-4">
-            <div class="grid grid-rows-6">
-              <label for="brand" class="font-lexend text-2xl font-semibold">Marca</label>
+          <form className="hidden md:flex  flex-col bg-gray-100 rounded-md shadow-md gap-4 p-4">
+            <div className="grid grid-rows-6">
+              <label htmlFor="brand" className="font-lexend text-2xl font-semibold">Marca</label>
               <input type="button" value="Porsche" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
               <input type="button" value="Hyundai" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
               <input type="button" value="Ford" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
@@ -130,8 +130,8 @@ export default function Home() {
               <input type="button" value="Mercedes-Benz" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
               <input type="button" value="BMW" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
             </div>
-            <div class="grid grid-rows-6">
-              <label for="model" class="font-lexend text-2xl font-semibold">Modelo</label>
+            <div className="grid grid-rows-6">
+              <label htmlFor="model" className="font-lexend text-2xl font-semibold">Modelo</label>
               <input type="button" value="Porsche 911" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
               <input type="button" value="Porsche Panamera" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
               <input type="button" value="BMW M3" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
@@ -140,8 +140,8 @@ export default function Home() {
               <input type="button" value="Mercedes-Benz A45" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
               <input type="button" value="Nissan GTR-R35" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" />
             </div>
-            <div class="grid grid-rows-6">
-              <label for="year" class="font-lexend text-2xl font-semibold">Ano</label>
+            <div className="grid grid-rows-6">
+              <label htmlFor="year" className="font-lexend text-2xl font-semibold">Ano</label>
               <input type="button" id="year" name="year" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="2023" />
               <input type="button" id="year" name="year" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="2022" />
               <input type="button" id="year" name="year" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="2021" />
@@ -149,28 +149,28 @@ export default function Home() {
               <input type="button" id="year" name="year" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="2019" />
               <input type="button" id="year" name="year" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="2018" />
             </div>
-            <div class="grid grid-rows-4">
-              <label for="year" class="font-lexend text-2xl font-semibold">Combustível</label>
+            <div className="grid grid-rows-4">
+              <label htmlFor="year" className="font-lexend text-2xl font-semibold">Combustível</label>
               <input type="button" id="fuel" name="fuel" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="Diesel" />
               <input type="button" id="fuel" name="fuel" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="Etanol" />
               <input type="button" id="fuel" name="fuel" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="Gasolina" />
               <input type="button" id="fuel" name="fuel" className="flex flex-row justify-start text-gray-500 hover:text-gray-700 cursor-pointer" value="Flex" />
             </div>
-            <div class="grid grid-rows-2">
-              <label for="km" class="font-lexend text-2xl font-semibold">KM</label>
+            <div className="grid grid-rows-2">
+              <label htmlFor="km" className="font-lexend text-2xl font-semibold">KM</label>
               <div className="grid grid-cols-2 gap-2" >
                 <input type="number" id="km-min" name="km-min" className="w-full p-2 border border-gray-400 rounded-md" placeholder="Minimo" />
                 <input type="number" id="km-max" name="km-max" className="w-full p-2 border border-gray-400 rounded-md" placeholder="Máximo" />
               </div>
             </div>
-            <div class="grid grid-rows-2">
-              <label for="price" class="font-lexend text-2xl font-semibold">Preço</label>
+            <div className="grid grid-rows-2">
+              <label htmlFor="price" className="font-lexend text-2xl font-semibold">Preço</label>
               <div className="grid grid-cols-2 gap-2" >
                 <input type="number" id="price-min" name="price-min" className="w-full p-2 border border-gray-400 rounded-md" placeholder="Minimo" />
                 <input type="number" id="price-max" name="price-max" className="w-full p-2 border border-gray-400 rounded-md" placeholder="Máximo" />
               </div>
             </div>
-            <button type="submit" class="w-full py-2 px-4 text-white bg-purple-800 hover:bg-purple-900 rounded-md">Ver anúncios</button>
+            <button type="submit" className="w-full py-2 px-4 text-white bg-purple-800 hover:bg-purple-900 rounded-md">Ver anúncios</button>
           </form>
         </aside>
         <div className="w-full overflow-auto p-1 md:col-span-4 flex flex-col space-y-5">
@@ -199,18 +199,18 @@ export default function Home() {
           <div className="hidden md:flex flex-col justify-center">
             <span className="flex flex-row justify-center gap-4 line-clamp-1">1</span>
             <div className="flex flex-row justify-center space-x-6">
-              <button type="button" class="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">{'<'} Voltar</button>
-              <button type="button" class="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">Seguinte {'>'}</button>
+              <button type="button" className="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">{'<'} Voltar</button>
+              <button type="button" className="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">Seguinte {'>'}</button>
             </div>
           </div>
         </div>
         <div className="flex flex-col space-y-6 my-4 md:hidden">
-          <button type="button" class="w-full py-2 px-4 text-white bg-purple-800 hover:bg-purple-900 rounded-md">Filtro</button>
+          <button type="button" className="w-full py-2 px-4 text-white bg-purple-800 hover:bg-purple-900 rounded-md">Filtro</button>
           <div className="flex flex-col justify-center">
             <span className="flex flex-row justify-center gap-4 line-clamp-1">1</span>
             <div className="flex flex-row justify-center space-x-6">
-              <button type="button" class="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">{'<'} Voltar</button>
-              <button type="button" class="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">Seguinte {'>'}</button>
+              <button type="button" className="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">{'<'} Voltar</button>
+              <button type="button" className="py-2 px-4 bg-transparent text-purple-800 hover:text-gray-900 rounded-md">Seguinte {'>'}</button>
             </div>
           </div>
         </div>
