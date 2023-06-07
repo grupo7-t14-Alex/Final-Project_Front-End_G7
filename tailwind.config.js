@@ -69,10 +69,15 @@ module.exports = {
         'random-12': '#30007D'
 
       },
+
       width: {
         19.5: 312,
         28.125: 200,
       }
+
+//       gradientColorStops: {
+//         'custom-gradient': ['#4529E6 31.25%', '#F1F3F5 31.26%', '#F1F3F5 100%'],
+//       },
 
     },
   },
