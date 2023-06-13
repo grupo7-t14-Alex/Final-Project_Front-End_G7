@@ -5,9 +5,6 @@
 @tailwind utilities;
 
 
-
-
-
 @layer components {
     .gradient {
         @apply bg-gradient-to-b from-brand-1 from-40% via-gray-800 via-30%  to-gray-800 to-40%

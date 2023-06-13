@@ -38,7 +38,8 @@ const CarDetails = () => {
                 </h1>
                 <p className='text-gray-200 text-base'>
                   Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industrys
+
+                  typesetting industry. Lorem Ipsum has been the industry
                   standard dummy text ever since the 1500s, when an unknown
                   printer took a galley of type and scrambled it to make a type
                   specimen book.
@@ -79,7 +80,7 @@ const CarDetails = () => {
                   </h2>
                   <p className='text-gray-200 text-base'>
                     Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industrys
+                    typesetting industry. Lorem Ipsum has been the industr
                   </p>
                   <button className='btn-user'>
                     Ver todos anuncios
@@ -97,6 +98,40 @@ const CarDetails = () => {
                 </span>
                 <h4 className='text-gray-100 text-sm font-medium'>
                   Júlia Lima
+                </h4>
+                <span className='text-gray-300 text-xs'>há 3 dias</span>
+              </div>
+              <p className='text-gray-200 text-sm mt-3'>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industr standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+              </p>
+            </div>
+            <div className=' w-full max-w-[663px] h-52 gap-5 mt-4'>
+              <div className='flex gap-3 items-center'>
+                <span className=' w-8 h-8 bg-random-4 text-center text-white text-sm rounded-full flex justify-center items-center'>
+                  MA
+                </span>
+                <h4 className=' text-gray-100 text-sm font-medium'>
+                  Marcos Antônio
+                </h4>
+                <span className='text-gray-300 text-xs'>há 3 dias</span>
+              </div>
+              <p className='text-gray-200 text-sm mt-3'>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industrys standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book.
+              </p>
+            </div>
+            <div className=' w-full max-w-[663px] h-52 gap-5 mt-4'>
+              <div className='flex gap-3 items-center'>
+                <span className=' w-8 h-8 bg-random-9 text-center text-white text-sm rounded-full flex justify-center items-center'>
+                  CS
+                </span>
+                <h4 className=' text-gray-100 text-sm font-medium'>
+                  Camila Silva
                 </h4>
                 <span className='text-gray-300 text-xs'>há 3 dias</span>
               </div>
