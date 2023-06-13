@@ -38,7 +38,7 @@ const CarDetails = () => {
                 </h1>
                 <p className=' text-gray-200 text-base'>
                   Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
+                  typesetting industry. Lorem Ipsum has been the industry
                   standard dummy text ever since the 1500s, when an unknown
                   printer took a galley of type and scrambled it to make a type
                   specimen book.
@@ -79,7 +79,7 @@ const CarDetails = () => {
                   </h2>
                   <p className=' text-gray-200 text-base'>
                     Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
+                    typesetting industry. Lorem Ipsum has been the industr
                   </p>
                   <button className=' w-52 h-12 bg-gray-0 text-white rounded'>
                     Ver todos anuncios
@@ -102,7 +102,7 @@ const CarDetails = () => {
               </div>
               <p className='text-gray-200 text-sm mt-3'>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
+                industry. Lorem Ipsum has been the industr standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen book.
               </p>
@@ -119,7 +119,7 @@ const CarDetails = () => {
               </div>
               <p className='text-gray-200 text-sm mt-3'>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
+                industry. Lorem Ipsum has been the industrys standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen book.
               </p>
@@ -136,7 +136,7 @@ const CarDetails = () => {
               </div>
               <p className='text-gray-200 text-sm mt-3'>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
+                industry. Lorem Ipsum has been the industrys standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen book.
               </p>

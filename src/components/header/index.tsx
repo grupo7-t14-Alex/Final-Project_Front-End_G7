@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 
-export const Header = ({ children }: { children: ReactNode }) => {
+export const Header = ({ children }: { children?: ReactNode }) => {
     return (
         <header className="flex justify-between border-b-2 border-b-[#DEE2E6]" id="header-top">
             <figure className="ml-[60px] my-[26.83px]">

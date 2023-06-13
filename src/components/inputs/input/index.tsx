@@ -1,15 +1,16 @@
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
+    id?: string
     label?: string;
     type: "text" | "email" | "number" | "password";
     placeholder?: string;
-    register: UseFormRegisterReturn<string>;
+    register?: UseFormRegisterReturn<string>;
 }
 
-export const Input = ({ label, type, placeholder, register }: InputProps) => {
+export const Input = ({ id, label, type, placeholder, register }: InputProps) => {
     return (
-        <div>
+        <div className="w-full">
             {label ? (
                 <label className="text-sm text-[#212529] font-medium block mb-2">
                     {label}
