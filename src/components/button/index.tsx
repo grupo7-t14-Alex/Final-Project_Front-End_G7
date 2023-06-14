@@ -1,6 +1,6 @@
-import {  ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     size: "big" | "medium";
     color:
         | "grey0"
@@ -20,7 +20,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     children: ReactNode;
     borderstyle?: boolean;
     border?: "grey6";
-    className?: any;
+    className?: string;
 }
 
 const sizesButton = {
@@ -37,23 +37,39 @@ const colorClasses = {
     brand1: "bg-[#4529E6] border-[#4529E6] text-[#FFFFFF] hover:bg-[#5126EA] hover:border-[#5126EA]",
     brand3: "bg-[#EDEAFD] border-[#EDEAFD] text-[#4529E6]",
     brandDisabled: "bg-[#B0A6F0] border-[#B0A6F0] text-[#EDEAFD]",
-    outline:"bg-transparent border-[#FDFDFD] text-[#FDFDFD] hover:bg-[#FDFDFD] hover:border-[#212529]",
-    outlineBrand1: "bg-transparent border-[#4529E6] text-[#4529E6] hover:bg-[#EDEAFD] hover:border-[#4529E6]",
+    outline:
+        "bg-transparent border-[#FDFDFD] text-[#FDFDFD] hover:bg-[#FDFDFD] hover:border-[#212529]",
+    outlineBrand1:
+        "bg-transparent border-[#4529E6] text-[#4529E6] hover:bg-[#EDEAFD] hover:border-[#4529E6]",
     link: "border-none text-[#0B0D0D] hover:bg-[#F1F3F5]",
     alert: "bg-[#FFE5E5] border-[#FFE5E5] text-[#CD2B31] hover:bg-[#FDD8D8] hover:border-[#FDD8D8]",
-    success: "bg-[#DDF3E4] border-[#DDF3E4] text-[#18794E] hover:bg-[#CCEBD7] hover:border-[#CCEBD7]",
-    brand10: "bg-[#DEE2E6] border-[#DEE2E6] text-[#495057] hover:bg-[#5126EA] hover:border-[#5126EA] hover:text-[#FFFFFF] : ''",
+    success:
+        "bg-[#DDF3E4] border-[#DDF3E4] text-[#18794E] hover:bg-[#CCEBD7] hover:border-[#CCEBD7]",
+    brand10:
+        "bg-[#DEE2E6] border-[#DEE2E6] text-[#495057] hover:bg-[#5126EA] hover:border-[#5126EA] hover:text-[#FFFFFF] : ''",
 };
 
 const borderbtn = {
     grey6: "bg-[#DEE2E6] border-[#495057] text-[#495057] hover:bg-[#CED4DA] hover:border-[#CED4DA]",
 };
 
-export const Button = ({ size, color, borderstyle, children, border}: ButtonProps) => {
-
-    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mb-8`;
+export const Button = ({
+    size,
+    color,
+    borderstyle,
+    children,
+    border,
+    className
+}: ButtonProps) => {
+    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]}`;
     if (borderstyle) {
         buttonClasses += `${borderbtn[border!]}`;
-      }
-    return <button className={`${buttonClasses}`}>{children}</button>;
+    }
+    return (
+        <button
+            className={`${buttonClasses} ${className}`}
+        >
+            {children}
+        </button>
+    );
 };

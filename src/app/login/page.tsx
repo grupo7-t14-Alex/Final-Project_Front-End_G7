@@ -10,6 +10,7 @@ import { loginSchema, loginSchemaType } from '@/schema/login.schema';
 import { AuthContext } from '@/context/Auth.Context';
 import { useContext } from 'react';
 import Link from 'next/link';
+import { ModalAnnouncement } from '@/components/modal/modalAnnouncement';
 
 
 export default function Login() {
@@ -26,7 +27,6 @@ export default function Login() {
             <Header />
             <section className='container mx-auto p-3'>
                 <div className='bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]'>
-
                     <form className='w-full flex flex-col items-start' onSubmit={handleSubmit(logInto)}>
                         <h1 className='mb-8 text-black font-bold text-[24px] leading-[30px]'>Login</h1>
 
