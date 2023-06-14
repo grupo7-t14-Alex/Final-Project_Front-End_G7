@@ -61,16 +61,11 @@ const borderbtn = {
     "bg-[#DEE2E6] border-[#495057] text-[#495057] hover:bg-[#CED4DA] hover:border-[#CED4DA]",
 };
 
-export const Button = ({
-  size,
-  color,
-  borderstyle,
-  children,
-  border,
-}: ButtonProps) => {
-  let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mb-8`;
-  if (borderstyle) {
-    buttonClasses += `${borderbtn[border!]}`;
-  }
-  return <button className={`${buttonClasses}`}>{children}</button>;
+export const Button = ({ size, color, borderstyle, children, border}: ButtonProps) => {
+
+    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mt-8`;
+    if (borderstyle) {
+        buttonClasses += `${borderbtn[border!]}`;
+      }
+    return <button className={`${buttonClasses}`}>{children}</button>;
 };
