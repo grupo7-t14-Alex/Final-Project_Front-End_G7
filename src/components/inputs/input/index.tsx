@@ -1,14 +1,14 @@
+import { InputHTMLAttributes, forwardRef } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     id?: string
     label?: string;
     type: "text" | "email" | "number" | "password";
     placeholder?: string;
-    register?: UseFormRegisterReturn<string>;
 }
 
-export const Input = ({ id, label, type, placeholder, register }: InputProps) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ id, label, type, placeholder, ...rest }, ref) => {
     return (
         <div className="w-full">
             {label ? (
@@ -20,8 +20,11 @@ export const Input = ({ id, label, type, placeholder, register }: InputProps) =>
                 className="w-full py-[16px] px-[10px] text-[#868E96] rounded border-[1.5px] border-[#E9ECEF] focus:outline-none focus:border-[#5126EA]"
                 type={type}
                 placeholder={placeholder}
-                {...register}
+                ref={ref}
+                {...rest}
             />
         </div>
     );
-};
+})
+
+Input.displayName = 'Input';

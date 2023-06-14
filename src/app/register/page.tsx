@@ -8,25 +8,8 @@ import { Api } from "@/services/Api";
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema } from '@/schema/register.schema'
 
-
-export const registerSchema = z.object({
-    name: z.string().email(),
-    email: z.string().min(6),
-    phone: z.string(),
-    cpf: z.string(),
-    birthDate: z.string(),
-    description: z.string(),
-    cep: z.string(),
-    state: z.string(),
-    city: z.string(),
-    street: z.string(),
-    number: z.number(),
-    complement: z.string(),
-    password: z.string(),
-    confirmPass: z.string(),
-});
-export type registerSchema = z.infer<typeof registerSchema>
 
 // async function registerUser(registerData: any) {
 //     try {
