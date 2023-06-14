@@ -51,7 +51,7 @@ const borderbtn = {
 
 export const Button = ({ size, color, borderstyle, children, border}: ButtonProps) => {
 
-    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mb-8`;
+    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mt-8`;
     if (borderstyle) {
         buttonClasses += `${borderbtn[border!]}`;
       }
