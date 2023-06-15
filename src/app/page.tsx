@@ -1,6 +1,7 @@
 import { Header } from 'src/components/header'
 import { Footer } from 'src/components/footer'
 import { cars } from './dtaBase'
+import { useRouter } from 'next/router'
 
 
 export default function Home() {
