@@ -1,27 +1,26 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  size: "big" | "medium";
-  color:
-    | "grey0"
-    | "grey4"
-    | "grey6"
-    | "grey10"
-    | "disabled"
-    | "brand1"
-    | "brand3"
-    | "brand10"
-    | "brandDisabled"
-    | "outline"
-    | "outlineBrand1"
-    | "link"
-    | "alert"
-    | "success"
-    | "btnCard";
-  children: ReactNode;
-  borderstyle?: boolean;
-  border?: "grey6";
-  className?: any;
+    size: "big" | "medium";
+    color:
+        | "grey0"
+        | "grey4"
+        | "grey6"
+        | "grey10"
+        | "disabled"
+        | "brand1"
+        | "brand3"
+        | "brand10"
+        | "brandDisabled"
+        | "outline"
+        | "outlineBrand1"
+        | "link"
+        | "alert"
+        | "success";
+    children: ReactNode;
+    borderstyle?: boolean;
+    border?: "grey6";
+    className?: string;
 }
 
 const sizesButton = {
@@ -64,8 +63,15 @@ const borderbtn = {
 export const Button = ({ size, color, borderstyle, children, border}: ButtonProps) => {
 
     let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mt-8`;
+
     if (borderstyle) {
         buttonClasses += `${borderbtn[border!]}`;
-      }
-    return <button className={`${buttonClasses}`}>{children}</button>;
+    }
+    return (
+        <button
+            className={`${buttonClasses} ${className}`}
+        >
+            {children}
+        </button>
+    );
 };

@@ -10,7 +10,10 @@ import { loginSchema, loginSchemaType } from '@/schema/login.schema';
 import { AuthContext } from '@/context/Auth.Context';
 import { useContext } from 'react';
 import Link from 'next/link';
+
+import { ModalAnnouncement } from '@/components/modal/modalAnnouncement';
 import { useRouter } from 'next/router';
+
 
 
 export default function Login() {
@@ -26,9 +29,10 @@ export default function Login() {
         <> 
             <Header />
             <section className='container mx-auto p-3'>
-                <div className='w-full bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]'>
 
+                <div className='w-full bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]'>
                     <form className=' mb-8 w-full flex flex-col items-start' onSubmit={handleSubmit(loginFunction)}>
+                      
                         <h1 className='mb-8 text-black font-bold text-[24px] leading-[30px]'>Login</h1>
 
                         <label htmlFor='email' className='mb-2 text-black font-medium text-[14px] leading-[17px]'>E-mail</label>
