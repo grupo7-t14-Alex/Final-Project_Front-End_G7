@@ -9,7 +9,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, registerSchemaType } from '@/schema/register.schema'
 import { AuthContext } from '@/context/Auth.Context'
 import { useContext } from 'react'
+import Link from 'next/link'
+import { ModalAnnouncement } from '@/components/modal/modalAnnouncement'
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
 
@@ -22,7 +26,24 @@ export default function Register() {
 
     return (
         <>
-            <Header/>
+            <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                    />
+                    {/* Same as */}
+            <ToastContainer />
+            <Header>
+                <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
+                <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
+            </Header>
             <section className='container mx-auto p-3'>
             <div className='bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]'>
                 <form className='w-full flex flex-col items-start' onSubmit={handleSubmit(registerFunction)}>
@@ -106,7 +127,7 @@ export default function Register() {
                     <Input type='password' {...register('confirmPass')} placeholder='Digite novamente sua Senha'/>
                     {errors.confirmPass?.message && <p className='text-[14px] text-red-500'>{errors.confirmPass?.message}</p>}
 
-                    <Button size='big' color='brand1' className='mt-8'>Finalizar Cadastro</Button>
+                    <Button size='big' color='brand1' className='mt-8 w-full'>Finalizar Cadastro</Button>
                 </form>
             </div>
         </section>
