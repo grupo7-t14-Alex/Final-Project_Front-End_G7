@@ -11,9 +11,8 @@ import { AuthContext } from '@/context/Auth.Context';
 import { useContext } from 'react';
 import Link from 'next/link';
 
-import { ModalAnnouncement } from '@/components/modal/modalAnnouncement';
-import { useRouter } from 'next/router';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
 export default function Login() {
@@ -24,10 +23,27 @@ export default function Login() {
         mode: 'onBlur',
         resolver: zodResolver(loginSchema)
     })
-
+    
     return (
         <> 
-            <Header />
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                />
+                {/* Same as */}
+            <ToastContainer />
+            <Header>
+                <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
+                <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
+            </Header>
             <section className='container mx-auto p-3'>
 
                 <div className='w-full bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]'>
@@ -43,11 +59,21 @@ export default function Login() {
                         <Input id='password' type='password' {...register('password')} placeholder='Digite seu senha aqui'/>
                         {errors.password?.message && <p className='text-[14px] text-red-500'>{errors.password.message}</p>}
 
-                        <button className='self-end mt-8'>Esqueci minha senha</button>
-                        <Button size='big' color='brand1' type='submit'>Entrar</Button>
+                        <button className='self-end mt-8 mb-8 hover:text-[#4529E6] hover:underline hover:scale-105'>Esqueci minha senha</button>
+                        <Button size='big' color='brand1' type='submit' className='w-full'>Entrar</Button>
                     </form>
-                        <p className='mb-8 self-center'>Ainda não sou cadastrado?</p>
-                        <Link href={'/register'} className='mb-8 w-full bg-[#DEE2E6] border-[#495057] text-[#495057] hover:bg-[#CED4DA] hover:border-[#CED4DA]'>Cadastrar</Link>     
+
+                    <div className='w-full flex flex-col items-center'>
+                        <p className='mb-8 '>Ainda não sou cadastrado?</p>
+                        <Link
+                            href={'/register'}
+                            className='w-full text-center bg-gray-1000 border border-[#495057] text-[#495057] hover:bg-[#495057] hover:border-[#495057] hover:text-[#FFFFFF] py-2 px-4 rounded'
+                        >
+                            Cadastrar
+                        </Link>
+                    </div>
+
+
                 </div>
             </section>
             <Footer/>

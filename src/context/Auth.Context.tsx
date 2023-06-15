@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { Api } from '../services/Api';
 import { NextRouter } from 'next/router';
 import { registerSchemaType } from '@/schema/register.schema';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { setCookie } from 'nookies';
 
 
 export const AuthContext = createContext({} as iProviderValue)
@@ -27,23 +28,32 @@ interface iProviderValue {
     registerFunction: (infoRegister: registerSchemaType) => Promise<void>;
 }
 
-export const AuthProvider = ({ children, router }: iAuthProviderChildren & { router: NextRouter }) => {
+export const AuthProvider = ({ children }: iAuthProviderChildren & { router: NextRouter }) => {
+
+    const router = useRouter()
 
     const [userLogin, setUserLogin] = useState<iInfoUser | null>(null) 
 
     const loginFunction = async (infoLogin: iInfoLogin) => {
         try {
             const res = await Api.post<iInfoUser>('/login', infoLogin)
-            console.log(res)
-            
-            const token = res.data.token;
-            const id = res.data.id;
-            Api.defaults.headers.common.Authorization = `Bearer ${token} `
+            .then((res) => {
+                setCookie(null, "@token", res.data.token, {
+                    maxAge: 60 * 30,
+                    patch: '/'
+                })
+                setCookie(null, "@id", res.data.id, {
+                    maxAge: 60 * 30,
+                    patch: '/'
+                })
+
+                const token= res.data.token
+                Api.defaults.headers.common.Authorization = `Bearer ${token} `
+            })
             
             toast.success('Login realizado com Sucesso!')
-            setTimeout(() => {
-                router.push('/register');
-              }, 2000);
+            setTimeout(() => {router.push('/')}, 2000);
+
         } catch(error){
             toast.error('E-mail ou senha incorreto!')
         }
@@ -70,58 +80,17 @@ export const AuthProvider = ({ children, router }: iAuthProviderChildren & { rou
                     street: infoRegister.street
                 }
             };
-            console.log(transformedData)
+
             const res = await Api.post('/users', transformedData)
-            console.log(res)
+
             toast.success("Usuario cadastrado com Sucesso!")
-            setTimeout(() => router.push('/login'), 2000)   
+            setTimeout(() => {router.push('/login')}, 2000);  
 
         } catch(error){
             toast.error("Algo deu errado cadastro!")
         }
     }
 
-
-    // const [InfoUser, setInfoUser] = useState<InfoUser | null>(null)
-
-    // const token = localStorage.getItem('@token')
-    // const id = localStorage.getItem('@id')
-   
-    // useEffect(() => {
-    //     if(!token){
-    //         setLoading(false)
-    //         setAutoLogin(false)
-    //         return
-    //     }
-    //     const GetInfoUser = async () =>{
-    //         const config = {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         }
-    //         Api.defaults.headers.common.Authorization = `Bearer ${token} `
-    //         try{
-    //             const resposta = await Api.get(`/users/${id}`, config)
-    //             setInfoUser(resposta.data)
-    //             setAutoLogin(true)
-
-    //             navigate('/home')
-    //             setLoading(false)
-    //         }catch{
-    //             setLoading(false)
-    //         } finally {
-    //             setLoading(false)
-    //         }
-    //     }
-
-    //     if(id){
-    //         GetInfoUser()
-    //     }
-    // }, [token, id])
-
-    // if(loading){
-    //     return null
-    // }
 
     return(
         <AuthContext.Provider value={{

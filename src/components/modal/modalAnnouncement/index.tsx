@@ -7,6 +7,7 @@ import styles from "./style.module.css";
 import { Button } from "@/components/button";
 
 export const ModalAnnouncement = () => {
+    
     return (
         <ModalWrapper>
             <div

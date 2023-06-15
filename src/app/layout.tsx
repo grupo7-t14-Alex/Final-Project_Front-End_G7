@@ -3,6 +3,8 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { AuthProvider } from '../context/Auth.Context'
 import { NextRouter, useRouter } from 'next/router';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface RootLayoutProps {
     children: React.ReactNode;
@@ -26,7 +28,9 @@ export default function RootLayout({ children, router }: RootLayoutProps) {
             <body className={inter.className}>
                 
                 <AuthProvider router={router}>
+               
                     {children}
+
                 </AuthProvider>
 
             </body>

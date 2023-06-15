@@ -16,6 +16,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
         | "outlineBrand1"
         | "link"
         | "alert"
+        | 'btnCard'
         | "success";
     children: ReactNode;
     borderstyle?: boolean;
@@ -24,9 +25,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const sizesButton = {
-  big: "py-[8px] px-[18px] rounded border-[1.5px] font-semibold text-base transition duration-200 ease-in-out w-full text-center",
-  medium:
-    "py-[4px] px-[10px] rounded border-[1.5px] font-semibold text-base transition duration-200 ease-in-out w-full text-center",
+  big: "py-[8px] px-[18px] rounded border-[1.5px] font-semibold text-base transition duration-200 ease-in-out text-center",
+  medium: "py-[4px] px-[10px] rounded border-[1.5px] font-semibold text-base transition duration-200 ease-in-out text-center",
 };
 
 const colorClasses = {
@@ -60,17 +60,15 @@ const borderbtn = {
     "bg-[#DEE2E6] border-[#495057] text-[#495057] hover:bg-[#CED4DA] hover:border-[#CED4DA]",
 };
 
-export const Button = ({ size, color, borderstyle, children, border}: ButtonProps) => {
+export const Button = ({ size, color, borderstyle, children, border, className}: ButtonProps) => {
 
-    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]} mt-8`;
+    let buttonClasses = `${sizesButton[size]} ${colorClasses[color]}`;
 
     if (borderstyle) {
         buttonClasses += `${borderbtn[border!]}`;
     }
     return (
-        <button
-            className={`${buttonClasses} ${className}`}
-        >
+        <button className={`${buttonClasses} ${className}`}>
             {children}
         </button>
     );

@@ -1,13 +1,18 @@
-import { Header } from 'src/components/header'
-import { Footer } from 'src/components/footer'
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 import { cars } from './dtaBase'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 
 
 export default function Home() {
+
   return (
     <main className="container mx-auto">
-      <Header />
+      <Header>
+        <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
+        <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
+      </Header>
       <div className="bg-gradient-to-b from-gray-300 to-gray-0 h-96 w-full relative">
         <img src="https://www.assobrav.com.br/wp-content/uploads/2020/07/porsche-911-turbo-2021-4.jpg" alt="Imagem ilustrativa carro porsche" className="w-full h-full object-cover absolute mix-blend-overlay" />
         <div className="h-full flex flex-col justify-center gap-5">
