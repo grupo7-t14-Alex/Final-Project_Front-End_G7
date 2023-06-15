@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }: iAuthProviderChildren & { router: Nex
                 cpf: infoRegister.cpf,
                 phone: infoRegister.phone,
                 birthdate: infoRegister.birthDate,
-                seller: false,
+                seller: infoRegister.seller,
                 description: infoRegister.description,
                 address: {
                     cep: infoRegister.cep,

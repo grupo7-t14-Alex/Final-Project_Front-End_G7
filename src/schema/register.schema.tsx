@@ -7,6 +7,7 @@ export const registerSchema = z.object({
     phone: z.string().min(11, 'digite seu Celular com DDD').max(11, 'digite seu Celular com DDD'),
     birthDate: z.string().min(8, 'sua data de nacimento (apenas numeros)').max(8, 'sua data de nacimento (apenas numeros)'),
     description: z.string().optional(),
+    seller: z.boolean().default(false),
 
     cep: z.string().min(5, 'Digite o seu CEP (apenas numeros)').max(11, 'Digite o seu CEP (apenas numeros)'),
     state: z.string().min(2, 'estado invalido, EX: SP').max(2, 'digite apenas 2 caracteres, EX: SP'),
