@@ -74,7 +74,7 @@ export const ModalAnnouncement = ({sellerId}: any) => {
             Api.defaults.headers.common.Authorization = `Bearer ${token}`;
             await Api.post(`/cars`, data);
             setOpenModel(false)
-            // window.location.reload();
+            window.location.reload();
             reset();
         }
     };
@@ -135,6 +135,8 @@ export const ModalAnnouncement = ({sellerId}: any) => {
                                 type="text"
                                 label="Ano"
                                 placeholder="2018"
+                                value={carInfo && carInfo[0].year}
+                                readOnly
                                 {...register("year")}
                             />
                             {errors.year?.message && (
@@ -153,6 +155,8 @@ export const ModalAnnouncement = ({sellerId}: any) => {
                                 type="text"
                                 label="Combustível"
                                 placeholder="Gasolina / Etanol"
+                                value = {carInfo && carInfo[0].fuel == 1 ? "Flex" : carInfo[0].fuel == 2 ? "Híbrido" : carInfo[0].fuel == 3 ? "Elétrico" : ""}
+                                readOnly
                                 {...register("fuel")}
                             />
                             {errors.fuel?.message && (
