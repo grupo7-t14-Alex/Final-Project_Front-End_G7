@@ -20,6 +20,7 @@ export const createCarSchema = z
             },
         }),
         price: z.string().min(1, "Campo obrigatório").or(z.number()),
+        fipeTable: z.string().min(1, "Campo obrigatório").or(z.number()),
         description: z.string().min(1, "Campo obrigatório"),
         coverPhoto: z.string().min(1, "Campo obrigatório"),
         image1: z.string().optional(),

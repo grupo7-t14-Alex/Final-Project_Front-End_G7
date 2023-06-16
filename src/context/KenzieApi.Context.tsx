@@ -11,13 +11,21 @@ interface iFipeProviderChildren {
 }
 
 interface iProviderValue {
+    Querybrand: any
+    GetFipeQuery: (brand: string) => Promise<void>
+    AllCars: any
+    BrandCars: string[],
+    openModal: boolean;
+    setOpenModel: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const FipeProvider = ({ children }: iFipeProviderChildren) => {
 
-    const [BrandCars, setBrandCars] = useState<string[] | null>(null)
+    const [BrandCars, setBrandCars] = useState<string[]>([])
 
-    const [AllCars, setAllCars] = useState<any>(null)
+    const [AllCars, setAllCars] = useState<any>()
+
+    const [Querybrand, setQuerybrand] = useState<any>()
 
     const GetFipe = async () => {
         try {
@@ -34,9 +42,28 @@ export const FipeProvider = ({ children }: iFipeProviderChildren) => {
         GetFipe()
     }, []) 
 
+    const GetFipeQuery = async (brand: any) => {
+        try {
+            const res = await Fipe.get<any>(`/cars?brand=${brand}`)
+            setQuerybrand(res.data)
+
+        } catch (error) {
+            toast.error("Algo seu errado na Fipe");
+        }
+    };
+
+    
+    const [openModal, setOpenModel] = useState(false)
 
     return (
-        <FipeContext.Provider value>
+        <FipeContext.Provider value={{
+            Querybrand,
+            GetFipeQuery,
+            AllCars,
+            setOpenModel,
+            openModal,
+            BrandCars,
+        }}>
             {children}
         </FipeContext.Provider>
     );

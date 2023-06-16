@@ -10,6 +10,7 @@ import { loginSchema, loginSchemaType } from "@/schema/login.schema";
 import { AuthContext } from "@/context/Auth.Context";
 import { useContext, useState } from "react";
 import Link from "next/link";
+
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
@@ -60,6 +61,8 @@ export default function Login() {
           Cadastrar
         </Link>
       </Header>
+
+      {isOpen ? <ModalAnnouncement /> : null}
 
       <section className="container mx-auto p-3">
         <div className="w-full bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]">

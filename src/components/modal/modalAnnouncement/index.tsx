@@ -5,18 +5,22 @@ import { ModalWrapper } from "..";
 import { Input } from "@/components/inputs/input";
 import { TextArea } from "@/components/inputs/textArea";
 import styles from "./style.module.css";
-import { Button } from "@/components/button";
+import { Button } from "@/components/button"; 
 import { useForm } from "react-hook-form";
 import {
     createCarSchema,
     createCarSchemaType,
 } from "@/schema/createCar.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { parseCookies } from "nookies";
 import { Api } from "@/services/Api";
+import { FipeContext } from "@/context/KenzieApi.Context";
 
-export const ModalAnnouncement = () => {
+export const ModalAnnouncement = ({sellerId}: any) => {
+
+    const { AllCars, BrandCars, setOpenModel, GetFipeQuery, Querybrand} = useContext(FipeContext)
+
     const [isNumberYear, setIsNumberYear] = useState(true);
     const [isNumberMilage, setIsNumberMilage] = useState(true);
     const [isNumberPrice, setIsNumberPrice] = useState(true);
@@ -34,6 +38,7 @@ export const ModalAnnouncement = () => {
     });
 
     const onSubmit = async (data: createCarSchemaType) => {
+        console.log(data)
         if (isNaN(Number(data.milage))) {
             setIsNumberMilage(false);
         }
@@ -56,7 +61,7 @@ export const ModalAnnouncement = () => {
             setIsNumberYear(true);
 
             data.milage = Math.round(Number(data.milage));
-            data.price = Math.round(Number(data.price));
+            // data.price = Math.round(Number(data.price));
             data.year = Math.round(Number(data.year));
 
             const gallery = [data.image1, data.image2];
@@ -65,11 +70,26 @@ export const ModalAnnouncement = () => {
             delete data.image1;
             delete data.image2;
 
+            
             Api.defaults.headers.common.Authorization = `Bearer ${token}`;
             await Api.post(`/cars`, data);
+            setOpenModel(false)
+            // window.location.reload();
             reset();
         }
     };
+
+    const [carModel, setcarModel] = useState<any>()
+    const selectBrand = async (event: any) => {
+        setcarModel(AllCars[event.target.value])
+        await GetFipeQuery(event.target.value) 
+    }
+
+    const [carInfo, setcarInfo] = useState<any>()
+    const selectModel = async (event: any) => {
+        const carFilter = Querybrand.filter((element: any) => element.name == event.target.value)
+        setcarInfo(carFilter)
+    }
 
     return (
         <ModalWrapper>
@@ -87,6 +107,7 @@ export const ModalAnnouncement = () => {
                         width={30}
                         height={30}
                         className="cursor-pointer"
+                        onClick={()  => setOpenModel(false)} 
                     />
                 </div>
                 <p className="text-gray-000 text-sm font-medium mt-4 mb-6">
@@ -94,30 +115,19 @@ export const ModalAnnouncement = () => {
                 </p>
                 <div className="flex flex-col gap-6">
                     <div>
-                        <Input
-                            type="text"
-                            label="Marca"
-                            placeholder="Mercedes Benz"
-                            {...register("brand")}
-                        />
-                        {errors.brand?.message && (
-                            <p className="text-[14px] text-red-500">
-                                {errors.brand.message}
-                            </p>
-                        )}
+                        <select {...register("brand")} onChange={(event) => selectBrand(event)}>
+                            {BrandCars.map((marca: string) => (
+                                <option value={marca} key={marca}>{marca}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
-                        <Input
-                            type="text"
-                            label="Modelo"
-                            placeholder="A 200 CGI ADVANCE SEDAN"
-                            {...register("model")}
-                        />
-                        {errors.model?.message && (
-                            <p className="text-[14px] text-red-500">
-                                {errors.model.message}
-                            </p>
-                        )}
+                        <select {...register("model")} onChange={(event) => selectModel(event)}>
+                            {carModel && carModel.map((model: any) => (
+                                <option value={model.name} key={model.name}>{model.name}</option>
+                            ))}
+                        </select>
+
                     </div>
                     <div className="w-full flex gap-3.5">
                         <div className="max-w-[50%]">
@@ -190,7 +200,10 @@ export const ModalAnnouncement = () => {
                             <Input
                                 type="text"
                                 label="Preço tabela FIPE"
-                                placeholder="48.000,00"
+                                placeholder="5.000,00"
+                                value={carInfo && carInfo[0].value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                readOnly
+                                {...register('fipeTable')}
                             />
                         </div>
                         <div className="max-w-[50%]">
@@ -272,7 +285,7 @@ export const ModalAnnouncement = () => {
                     Adicionar campo para imagem da galeria
                 </Button>
                 <div className="mt-[50px] flex justify-end gap-x-2.5">
-                    <Button className="max-w-max" color="grey6" size="big">
+                    <Button className="max-w-max" color="grey6" size="big" onClick={() => setOpenModel(false)}>
                         Cancelar
                     </Button>
                     <Button className="max-w-max" color="brand1" size="big" type="submit">

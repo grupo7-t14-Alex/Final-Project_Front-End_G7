@@ -1,11 +1,11 @@
 import { Header } from "@/components/header";
-import { Button } from "@/components/button";
 import { Footer } from "@/components/footer";
 import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
-import { ModalAnnouncement } from "@/components/modal/modalAnnouncement";
 import { UserCard } from "@/components/cards/userCard";
-import { cookies } from "next/headers";
+import { parseCookies } from "nookies";
+import UserInfos from "@/components/infoUser/infoUser";
+import { cookies } from "next/dist/client/components/headers";
 
 export interface Seller {
   id: string;
@@ -41,9 +41,13 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
   const cookiesStore = cookies();
   const userId = cookiesStore.get("@id");
   const sellerId = params.id;
+
   const response = await Api.get(`/users/${sellerId}`);
+
   const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
+
   const currentUser: Seller = responseCurrentUser.data;
+
   const seller: Seller = response.data;
 
   return (
@@ -59,25 +63,8 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
         </div>
       </Header>
       <main className="gradient w-full h-max flex flex-col mx-auto items-center">
-        <div className="profile-info mt-32 flex flex-col">
-          <div className="w-32 h-32 rounded-full bg-brand-1 flex items-center justify-center">
-            <h4 className="text-white font-bold text-xl">
-              {seller.name.match(/\b(\w)/gi)}
-            </h4>
-          </div>
-          <div className="flex items-center gap-2">
-            <h2 className="font-bold text-xl">{seller.name}</h2>
-            <span className="p-1 text-brand-1 bg-brand-4 font-medium rounded">
-              Anunciante
-            </span>
-          </div>
-          <p>{seller.description}</p>
-          {currentUser.seller ? (
-            <Button size="medium" color="outlineBrand1" className="max-w-max">
-              Criar Anuncio
-            </Button>
-          ) : null}
-        </div>
+        <UserInfos seller={seller} sellerId={sellerId} />
+
         <ul className="w-[90%] h-500 my-24 flex flex-row overflow-x-auto items-center justify-start gap-8 md:flex-wrap md:h-max">
           {currentUser.id === seller.id
             ? seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
