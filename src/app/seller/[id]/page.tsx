@@ -3,37 +3,39 @@ import { Button } from "@/components/button";
 import { Footer } from "@/components/footer";
 import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
+import { ModalAnnouncement } from "@/components/modal/modalAnnouncement";
 import { UserCard } from "@/components/cards/userCard";
 import { cookies } from "next/headers";
 
+
 export interface Seller {
-  id: string;
-  createdAt: string;
-  name: string;
-  email: string;
-  cpf: string;
-  phone: string;
-  birthdate: string;
-  description: string | null;
-  seller: boolean;
-  cars: Cars[];
+    id: string;
+    createdAt: string;
+    name: string;
+    email: string;
+    cpf: string;
+    phone: string;
+    birthdate: string;
+    description: string | null;
+    seller: boolean;
+    cars: Cars[];
 }
 
 interface Cars {
-  id: string;
-  brand: string;
-  year: number;
-  color: string;
-  milage: number;
-  model: string;
-  fuel: string;
-  price: string;
-  description: string;
-  coverPhoto: string;
-  gallery: String[];
-  published: boolean;
-  createdAt: string;
-  userId: string;
+    id: string;
+    brand: string;
+    year: number;
+    color: string;
+    milage: number;
+    model: string;
+    fuel: string;
+    price: string;
+    description: string;
+    coverPhoto: string;
+    gallery: String[];
+    published: boolean;
+    createdAt: string;
+    userId: string;
 }
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
@@ -103,6 +105,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
         </div>
       </main>
       <Footer />
+      <ModalAnnouncement/>
     </>
   );
 };
