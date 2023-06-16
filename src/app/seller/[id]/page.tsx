@@ -3,7 +3,10 @@ import { Button } from "@/components/button";
 import { Footer } from "@/components/footer";
 import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
+import { ModalAnnouncement } from "@/components/modal/modalAnnouncement";
 import { UserCard } from "@/components/cards/userCard";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/Auth.Context";
 import { cookies } from "next/headers";
 
 export interface Seller {
@@ -80,9 +83,11 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
         <ul className="w-[90%] h-500 my-24 flex flex-row overflow-x-auto items-center justify-start gap-8 md:flex-wrap md:h-max">
           {currentUser.id === seller.id
             ? seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
-            : seller.cars.map((car) => (
-                <UserCard key={car.id} car={car} seller={seller} />
-              ))}
+            : seller.cars.map((car) =>
+                car.published ? (
+                  <UserCard key={car.id} car={car} seller={seller} />
+                ) : null
+              )}
         </ul>
         <span className="flex flex-row justify-center gap-4 line-clamp-1">
           1

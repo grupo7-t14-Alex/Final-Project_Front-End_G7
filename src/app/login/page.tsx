@@ -8,11 +8,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, loginSchemaType } from '@/schema/login.schema';
 import { AuthContext } from '@/context/Auth.Context';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { ModalAnnouncement } from '@/components/modal/modalAnnouncement';
 
 
 export default function Login() {
@@ -24,6 +25,12 @@ export default function Login() {
         resolver: zodResolver(loginSchema)
     })
     
+
+    const [isOpen, setisOpen] = useState(true);
+    const openModal = (value: boolean) => {
+      setisOpen(value);
+    };
+
     return (
         <> 
             <ToastContainer
@@ -44,6 +51,11 @@ export default function Login() {
                 <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
                 <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
             </Header>
+
+          
+    { isOpen ? <ModalAnnouncement/>: null}
+
+
             <section className='container mx-auto p-3'>
 
                 <div className='w-full bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]'>

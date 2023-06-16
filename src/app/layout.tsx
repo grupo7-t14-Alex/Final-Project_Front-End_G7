@@ -5,6 +5,7 @@ import { AuthProvider } from '../context/Auth.Context'
 import { NextRouter, useRouter } from 'next/router';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FipeContext, FipeProvider } from "@/context/KenzieApi.Context";
 
 interface RootLayoutProps {
     children: React.ReactNode;
@@ -28,9 +29,9 @@ export default function RootLayout({ children, router }: RootLayoutProps) {
             <body className={inter.className}>
                 
                 <AuthProvider router={router}>
-               
-                    {children}
-
+                    <FipeProvider>
+                        {children}
+                    </FipeProvider>
                 </AuthProvider>
 
             </body>
