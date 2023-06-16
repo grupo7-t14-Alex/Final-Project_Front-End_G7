@@ -5,8 +5,6 @@ import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
 import { ModalAnnouncement } from "@/components/modal/modalAnnouncement";
 import { UserCard } from "@/components/cards/userCard";
-import { useContext, useState } from "react";
-import { AuthContext } from "@/context/Auth.Context";
 import { cookies } from "next/headers";
 
 export interface Seller {
@@ -74,7 +72,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
             </span>
           </div>
           <p>{seller.description}</p>
-          {currentUser.seller && currentUser.id === seller.id ? (
+          {currentUser.seller ? (
             <Button size="medium" color="outlineBrand1" className="max-w-max">
               Criar Anuncio
             </Button>
