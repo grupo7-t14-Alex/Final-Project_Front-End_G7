@@ -3,6 +3,8 @@ import { Button } from "@/components/button";
 import { Footer } from "@/components/footer";
 import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
+import { UserCard } from "@/components/cards/userCard";
+import { cookies } from "next/headers";
 
 export interface Seller {
   id: string;
@@ -35,17 +37,32 @@ interface Cars {
 }
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
+  const cookiesStore = cookies();
+  const userId = cookiesStore.get("@id");
   const sellerId = params.id;
   const response = await Api.get(`/users/${sellerId}`);
+  const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
+  const currentUser: Seller = responseCurrentUser.data;
   const seller: Seller = response.data;
 
   return (
     <>
-      <Header />
+      <Header>
+        <div className="w-full flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-brand-1 flex items-center justify-center ">
+            <h4 className="text-white font-bold text-sm">
+              {currentUser.name.match(/\b(\w)/gi)}
+            </h4>
+          </div>
+          <h2 className="font-medium text-sm">{currentUser.name}</h2>
+        </div>
+      </Header>
       <main className="gradient w-full h-max flex flex-col mx-auto items-center">
         <div className="profile-info mt-32 flex flex-col">
           <div className="w-32 h-32 rounded-full bg-brand-1 flex items-center justify-center">
-            <h4 className="text-white font-bold text-xl">PA</h4>
+            <h4 className="text-white font-bold text-xl">
+              {seller.name.match(/\b(\w)/gi)}
+            </h4>
           </div>
           <div className="flex items-center gap-2">
             <h2 className="font-bold text-xl">{seller.name}</h2>
@@ -54,14 +71,18 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
             </span>
           </div>
           <p>{seller.description}</p>
-          <Button size="medium" color="outlineBrand1">
-            Criar Anuncio
-          </Button>
+          {currentUser.seller ? (
+            <Button size="medium" color="outlineBrand1" className="max-w-max">
+              Criar Anuncio
+            </Button>
+          ) : null}
         </div>
         <ul className="w-[90%] h-500 my-24 flex flex-row overflow-x-auto items-center justify-start gap-8 md:flex-wrap md:h-max">
-          {seller.cars.map((car) => (
-            <SellerCard key={car.id} car={car} />
-          ))}
+          {currentUser.id === seller.id
+            ? seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
+            : seller.cars.map((car) => (
+                <UserCard key={car.id} car={car} seller={seller} />
+              ))}
         </ul>
         <span className="flex flex-row justify-center gap-4 line-clamp-1">
           1
@@ -85,5 +106,23 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
     </>
   );
 };
+
+/* export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = nookies.get(ctx);
+  console.log("cookies");
+
+  if (cookies["@token"]) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { userId: cookies["@id"] },
+  };
+}; */
 
 export default SellerProfile;
