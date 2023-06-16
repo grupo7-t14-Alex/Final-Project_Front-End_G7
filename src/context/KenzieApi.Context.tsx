@@ -11,6 +11,8 @@ interface iFipeProviderChildren {
 }
 
 interface iProviderValue {
+    isOpen: boolean
+    setisOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const FipeProvider = ({ children }: iFipeProviderChildren) => {
@@ -34,9 +36,14 @@ export const FipeProvider = ({ children }: iFipeProviderChildren) => {
         GetFipe()
     }, []) 
 
+    const [isOpen, setisOpen] = useState(false);
+  
 
     return (
-        <FipeContext.Provider value>
+        <FipeContext.Provider value={{
+            isOpen,
+            setisOpen
+        }}>
             {children}
         </FipeContext.Provider>
     );
