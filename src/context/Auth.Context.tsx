@@ -8,6 +8,7 @@ import { registerSchemaType } from "@/schema/register.schema";
 import { useRouter } from "next/navigation";
 import { setCookie } from "nookies";
 
+
 export const AuthContext = createContext({} as iProviderValue);
 
 interface iAuthProviderChildren {

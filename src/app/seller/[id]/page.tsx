@@ -5,6 +5,8 @@ import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
 import { ModalAnnouncement } from "@/components/modal/modalAnnouncement";
 import { UserCard } from "@/components/cards/userCard";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/Auth.Context";
 import { cookies } from "next/headers";
 
 
@@ -39,16 +41,19 @@ interface Cars {
 }
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
+
   const cookiesStore = cookies();
-  const userId = cookiesStore.get("@id");
+  const userId = cookiesStore.get("@id");  
   const sellerId = params.id;
   const response = await Api.get(`/users/${sellerId}`);
   const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
   const currentUser: Seller = responseCurrentUser.data;
   const seller: Seller = response.data;
 
+
   return (
     <>
+    
       <Header>
         <div className="w-full flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-brand-1 flex items-center justify-center ">
@@ -74,7 +79,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
           </div>
           <p>{seller.description}</p>
           {currentUser.seller ? (
-            <Button size="medium" color="outlineBrand1" className="max-w-max">
+            <Button size="medium" color="outlineBrand1" className="max-w-max" onClick={() => openModal(true)}>
               Criar Anuncio
             </Button>
           ) : null}
@@ -105,7 +110,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
         </div>
       </main>
       <Footer />
-      <ModalAnnouncement/>
+      
     </>
   );
 };
