@@ -1,4 +1,3 @@
-import { Seller } from "@/app/seller/[id]/page";
 import { Button } from "@/components/button";
 
 interface SellerCardProps {
@@ -38,7 +37,11 @@ export const SellerCard = ({ car }: SellerCardProps) => {
         </span>
       )}
       <figure className="w-full h-36 p-2 bg-gray-700 flex items-center justify-center mb-6 rounded">
-        <img src={car.coverPhoto} alt="Imagem de carro" className="w-full h-full" />
+        <img
+          src={car.coverPhoto}
+          alt="Imagem de carro"
+          className="w-full h-full"
+        />
       </figure>
       <div className="w-full h-64 p-2 flex flex-col items-start gap-7">
         <h5 className="font-semibold text-base text-gray-0">
