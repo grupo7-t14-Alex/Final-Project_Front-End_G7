@@ -39,11 +39,11 @@ export const AuthProvider = ({
     try {
       const res = await Api.post<iInfoUser>("/login", infoLogin).then((res) => {
         setCookie(null, "@token", res.data.token, {
-          maxAge: 60 * 30,
+          maxAge: 60 * 5000,
           patch: "/",
         });
         setCookie(null, "@id", res.data.userId, {
-          maxAge: 60 * 30,
+          maxAge: 60 * 5000,
           patch: "/",
         });
 
