@@ -2,10 +2,17 @@ import { Header } from "@/components/header";
 import car from "../../img/car.png";
 import minCar from "../../img/minCar.png";
 import Image from "next/image";
+import Link from "next/link";
+
+
 const CarDetails = () => {
+  
   return (
     <>
-      <header className="h-16 border border-gray-100">Header</header>
+              <Header>
+                <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
+                <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
+            </Header>
       <main className="gradient w-full h-screen">
         <div className="w-[90%] mx-auto">
           <div className="flex flex-col md:flex-row w-full">
