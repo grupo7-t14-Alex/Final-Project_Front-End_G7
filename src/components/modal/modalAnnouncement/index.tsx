@@ -12,11 +12,15 @@ import {
     createCarSchemaType,
 } from "@/schema/createCar.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { parseCookies } from "nookies";
 import { Api } from "@/services/Api";
+import { FipeContext } from "@/context/KenzieApi.Context";
 
 export const ModalAnnouncement = () => {
+
+    // const {  isOpen, setisOpen } = useContext(FipeContext)
+
     const [isNumberYear, setIsNumberYear] = useState(true);
     const [isNumberMilage, setIsNumberMilage] = useState(true);
     const [isNumberPrice, setIsNumberPrice] = useState(true);
@@ -87,6 +91,7 @@ export const ModalAnnouncement = () => {
                         width={30}
                         height={30}
                         className="cursor-pointer"
+                        // onClick={()  => setisOpen(false)} 
                     />
                 </div>
                 <p className="text-gray-000 text-sm font-medium mt-4 mb-6">

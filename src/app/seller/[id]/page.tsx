@@ -1,3 +1,4 @@
+'use client'
 import { Header } from "@/components/header";
 import { Button } from "@/components/button";
 import { Footer } from "@/components/footer";
@@ -6,8 +7,8 @@ import { SellerCard } from "@/components/cards/sellerCard";
 import { ModalAnnouncement } from "@/components/modal/modalAnnouncement";
 import { UserCard } from "@/components/cards/userCard";
 import { useContext, useState } from "react";
-import { AuthContext } from "@/context/Auth.Context";
-import { cookies } from "next/headers";
+import { parseCookies } from "nookies";
+import { FipeContext } from "@/context/KenzieApi.Context";
 
 
 export interface Seller {
@@ -42,19 +43,27 @@ interface Cars {
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
 
-  const cookiesStore = cookies();
-  const userId = cookiesStore.get("@id");  
+  const {  isOpen, setisOpen } = useContext(FipeContext)
+
+  const cookies = parseCookies();
+  const token = cookies["@token"];
+  const userId = cookies["@id"];
+  
   const sellerId = params.id;
   const response = await Api.get(`/users/${sellerId}`);
-  const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
+  const responseCurrentUser = await Api.get(`/users/${userId}`);
   const currentUser: Seller = responseCurrentUser.data;
   const seller: Seller = response.data;
 
+  const openModal = (value: boolean) => {
+    setisOpen(value);
+  };
 
   return (
     <>
     
       <Header>
+      { isOpen ? <ModalAnnouncement/>: null}
         <div className="w-full flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-brand-1 flex items-center justify-center ">
             <h4 className="text-white font-bold text-sm">
@@ -79,7 +88,9 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
           </div>
           <p>{seller.description}</p>
           {currentUser.seller ? (
-            <Button size="medium" color="outlineBrand1" className="max-w-max" onClick={() => openModal(true)}>
+            <Button size="medium" color="outlineBrand1" className="max-w-max"
+            onClick={() => openModal(true)}
+            >
               Criar Anuncio
             </Button>
           ) : null}
