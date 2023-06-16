@@ -81,7 +81,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
           {currentUser.id === seller.id
             ? seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
             : seller.cars.map((car) => (
-                <UserCard key={car.id} car={car} seller={seller} />
+              car.published ? <UserCard key={car.id} car={car} seller={seller} /> : null
               ))}
         </ul>
         <span className="flex flex-row justify-center gap-4 line-clamp-1">
@@ -106,23 +106,5 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
     </>
   );
 };
-
-/* export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
-  console.log("cookies");
-
-  if (cookies["@token"]) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { userId: cookies["@id"] },
-  };
-}; */
 
 export default SellerProfile;
