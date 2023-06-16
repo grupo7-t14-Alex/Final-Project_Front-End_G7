@@ -71,7 +71,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
             </span>
           </div>
           <p>{seller.description}</p>
-          {currentUser.seller ? (
+          {currentUser.seller && currentUser.id === seller.id ? (
             <Button size="medium" color="outlineBrand1" className="max-w-max">
               Criar Anuncio
             </Button>
@@ -106,23 +106,5 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
     </>
   );
 };
-
-/* export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
-  console.log("cookies");
-
-  if (cookies["@token"]) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { userId: cookies["@id"] },
-  };
-}; */
 
 export default SellerProfile;
