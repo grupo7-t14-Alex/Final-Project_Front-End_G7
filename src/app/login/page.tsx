@@ -26,11 +26,6 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const [isOpen, setisOpen] = useState(true);
-  const openModal = (value: boolean) => {
-    setisOpen(value);
-  };
-
   return (
     <>
       <ToastContainer
@@ -61,8 +56,6 @@ export default function Login() {
           Cadastrar
         </Link>
       </Header>
-
-      {isOpen ? <ModalAnnouncement /> : null}
 
       <section className="container mx-auto p-3">
         <div className="w-full bg-gray-1000 p-10 max-w-[450px] mx-auto rounded mt-[100px] mb-[100px]">

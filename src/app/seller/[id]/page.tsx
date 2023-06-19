@@ -3,7 +3,6 @@ import { Footer } from "@/components/footer";
 import { Api } from "@/services/Api";
 import { SellerCard } from "@/components/cards/sellerCard";
 import { UserCard } from "@/components/cards/userCard";
-import { parseCookies } from "nookies";
 import UserInfos from "@/components/infoUser/infoUser";
 import { cookies } from "next/dist/client/components/headers";
 
