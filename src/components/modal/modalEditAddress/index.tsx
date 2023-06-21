@@ -11,6 +11,8 @@ import { Api } from "@/services/Api";
 import { schemaAddress, updateUserAddressSchemaType } from "@/schema/register.schema";
 import { cookies } from "next/dist/client/components/headers";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "@/context/User.Context";
 
 
 interface StatusModelType {
@@ -28,8 +30,7 @@ interface UserAddress {
 }
 
 export const ModalUpAddress = async ({ openModalUpAdrress, setOpenModalUpAddress }: StatusModelType) => {
-    const cookiesStore = cookies();
-    const userId = cookiesStore.get("@id");
+    const { userId, updateAddress } = useContext(UserContext)
 
     const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
 
@@ -42,17 +43,7 @@ export const ModalUpAddress = async ({ openModalUpAdrress, setOpenModalUpAddress
     })
 
     const onSubmit = async (data: updateUserAddressSchemaType) => {
-        try {
-
-            await Api.patch(`/addresses/${addressId}`, data);
-
-            toast.success("Usuario Atualizado com Sucesso!");
-            setTimeout(() => {
-                setOpenModalUpAddress(!openModalUpAdrress)
-            }, 2000);
-        } catch (error) {
-            toast.error("Algo deu errado ao salvar alterações!");
-        }
+        updateAddress(addressId, data, openModalUpAdrress, setOpenModalUpAddress)
     }
 
     return (

@@ -7,14 +7,12 @@ import styles from '@/components/modal/modalAnnouncement/style.module.css'
 import { Button } from "@/components/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Api } from "@/services/Api";
 import { schema, updateUserSchemaType } from "@/schema/register.schema";
 import { ModalDeleteUser } from "../modalDeleteUser";
-import { cookies } from "next/dist/client/components/headers";
 import { Seller } from "@/app/seller/[id]/page";
-import { toast } from "react-toastify";
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { UserContext } from "@/context/User.Context";
 
 interface StatusModelType {
     openModalUp: boolean
@@ -22,8 +20,8 @@ interface StatusModelType {
 }
 
 export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelType) => {
-    const cookiesStore = cookies();
-    const userId: RequestCookie | undefined = cookiesStore.get("@id");
+
+    const { updateUser, userId } = useContext(UserContext)
 
     const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
 
@@ -47,18 +45,9 @@ export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelTy
         if (!data.password) {
             delete data.password
         }
-        try {
-            const newData = { ...data, seller: activeButton };
+        const newData = { ...data, seller: activeButton };
 
-            await Api.patch(`/users/${userId}`, newData);
-
-            toast.success("Usuario Atualizado com Sucesso!");
-            setTimeout(() => {
-                setOpenModalUp(!openModalUp)
-            }, 2000);
-        } catch (error) {
-            toast.error("Algo deu errado ao salvar alterações!");
-        }
+        updateUser(newData, openModalUp, setOpenModalUp)
     }
 
     return (
