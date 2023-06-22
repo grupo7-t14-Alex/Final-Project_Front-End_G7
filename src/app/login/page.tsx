@@ -110,7 +110,7 @@ export default function Login() {
           </form>
 
           <div className="w-full flex flex-col items-center">
-            <p className="mb-8 ">Ainda não sou cadastrado?</p>
+            <p className="mb-8 ">Ainda não possui conta?</p>
             <Link
               href={"/register"}
               className="w-full text-center bg-gray-1000 border border-[#495057] text-[#495057] hover:bg-[#495057] hover:border-[#495057] hover:text-[#FFFFFF] py-2 px-4 rounded"

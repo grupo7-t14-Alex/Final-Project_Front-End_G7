@@ -41,6 +41,11 @@ export const SellerCard = ({ car }: SellerCardProps) => {
           src={car.coverPhoto}
           alt="Imagem de carro"
           className="w-full h-full"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src =
+              "https://img2.gratispng.com/20180807/esr/kisspng-sports-car-clip-art-computer-icons-vector-graphics-fav02-avto-magic-5b69fe4d3d7f75.6996915515336730372519.jpg";
+          }}
         />
       </figure>
       <div className="w-full h-64 p-2 flex flex-col items-start gap-7">

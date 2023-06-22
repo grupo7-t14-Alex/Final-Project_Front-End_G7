@@ -1,12 +1,14 @@
 "use client";
 
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Api } from "../services/Api";
 import { NextRouter } from "next/router";
 import { registerSchemaType } from "@/schema/register.schema";
 import { useRouter } from "next/navigation";
-import { setCookie } from "nookies";
+import { parseCookies, setCookie } from "nookies";
+import { Seller } from "@/app/seller/[id]/page";
+import { ResetPasswordData, SendEmailData } from "@/schema/sendEmail.schema";
 
 export const AuthContext = createContext({} as iProviderValue);
 
@@ -15,7 +17,7 @@ interface iAuthProviderChildren {
 }
 interface iInfoUser {
   token: string;
-  userId: string;
+  id: string;
 }
 export interface iInfoLogin {
   email: string;
@@ -25,6 +27,11 @@ interface iProviderValue {
   loginFunction(infoLogin: iInfoLogin): Promise<void>;
   userLogin: iInfoUser | null;
   registerFunction: (infoRegister: registerSchemaType) => Promise<void>;
+  user: any;
+  findSeller: (id: string) => Promise<any>;
+  protectRoutes: () => void;
+  sendEmail: (email: SendEmailData) => void;
+  resetPassword: (password: ResetPasswordData, token: string) => void;
 }
 
 export const AuthProvider = ({
@@ -32,7 +39,13 @@ export const AuthProvider = ({
 }: iAuthProviderChildren & { router: NextRouter }) => {
   const router = useRouter();
 
+  const [user, setUser] = useState<Seller>({} as Seller);
+
   const [userLogin, setUserLogin] = useState<iInfoUser | null>(null);
+
+  const cookies = parseCookies();
+  const userId = cookies["@id"];
+  const token = cookies["@token"];
 
   const loginFunction = async (infoLogin: iInfoLogin) => {
     try {
@@ -41,7 +54,7 @@ export const AuthProvider = ({
           maxAge: 60 * 5000,
           patch: "/",
         });
-        setCookie(null, "@id", res.data.userId, {
+        setCookie(null, "@id", res.data.id, {
           maxAge: 60 * 5000,
           patch: "/",
         });
@@ -92,9 +105,62 @@ export const AuthProvider = ({
     }
   };
 
+  const protectRoutes = () => {
+    if (!token) {
+      router.push("/login");
+    }
+  };
+
+  useEffect(() => {
+    const findUser = async (id: string) => {
+      const response = await Api.get(`/users/${id}`);
+      const user = response.data;
+      setUser(user);
+    };
+    if (userId) {
+      findUser(userId);
+    }
+  }, []);
+
+  const findSeller = async (id: string) => {
+    const response = await Api.get(`/users/${id}`);
+    const seller = response.data;
+    return seller;
+  };
+
+  const sendEmail = (email: SendEmailData) => {
+    console.log(email);
+    Api.post("users/resetpass", email)
+      .then(() => {
+        toast.success("Login realizado com Sucesso!");
+        router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Verifique se o email esta correto!");
+      });
+  };
+
+  const resetPassword = (password: ResetPasswordData, token: string) => {
+    Api.patch(`users/resetpass/${token}`, { password: password.password })
+      .then(() => {
+        toast.success("Senha atualizada com sucesso");
+        router.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Erro ao atualizar a senha");
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
+        resetPassword,
+        sendEmail,
+        protectRoutes,
+        findSeller,
+        user,
         loginFunction,
         userLogin,
         registerFunction,
