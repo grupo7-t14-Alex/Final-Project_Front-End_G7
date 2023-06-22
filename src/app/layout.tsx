@@ -5,6 +5,8 @@ import { AuthProvider } from '../context/Auth.Context'
 import { NextRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from "@/context/User.Context";
+import { CarsProvider } from "@/context/Cars.Context";
+
 
 
 interface RootLayoutProps {
@@ -30,7 +32,9 @@ export default function RootLayout({ children, router }: RootLayoutProps) {
 
                 <AuthProvider router={router}>
                     <UserProvider>
+                      <CarsProvider>
                         {children}
+                      </CarsProvider>
                     </UserProvider>
                 </AuthProvider>
 
