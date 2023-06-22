@@ -4,9 +4,9 @@ import closeModal from "../../../../public/assets/close-modal.png";
 import { ModalWrapper } from "..";
 import styles from '@/components/modal/modalAnnouncement/style.module.css'
 import { Button } from "@/components/button";
-import { Api } from "@/services/Api";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
-import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "@/context/User.Context";
 
 interface StatusModelType {
     userId: RequestCookie | undefined
@@ -17,19 +17,10 @@ interface StatusModelType {
 }
 
 export const ModalDeleteUser = ({ userId, openModalUp, setOpenModalUp, openModalDeleteUser, setOpenModalDeleteUser }: StatusModelType) => {
+    const { deleteUser } = useContext(UserContext)
 
     const onSubmit = async () => {
-        try {
-            await Api.delete(`/users/${userId}`);
-
-            toast.success("Usuario deletado com Sucesso!");
-            setTimeout(() => {
-                setOpenModalDeleteUser(!openModalDeleteUser)
-                setOpenModalUp(!openModalUp)
-            }, 2000);
-        } catch (error) {
-            toast.error("Algo deu errado ao deletar usuário!");
-        }
+        deleteUser(userId, openModalUp, setOpenModalUp, openModalDeleteUser, setOpenModalDeleteUser)
     }
 
     return (

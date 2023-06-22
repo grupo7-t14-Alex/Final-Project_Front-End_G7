@@ -4,13 +4,15 @@ import { Inter } from "next/font/google";
 import { AuthProvider } from '../context/Auth.Context'
 import { NextRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
+import { UserProvider } from "@/context/User.Context";
 import { CarsProvider } from "@/context/Cars.Context";
+
 
 
 interface RootLayoutProps {
     children: React.ReactNode;
     router: NextRouter;
-  }
+}
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,11 +29,13 @@ export default function RootLayout({ children, router }: RootLayoutProps) {
         <html lang="en">
 
             <body className={inter.className}>
-                
+
                 <AuthProvider router={router}>
-                 <CarsProvider>
-                    {children}
-                 </CarsProvider> 
+                    <UserProvider>
+                      <CarsProvider>
+                        {children}
+                      </CarsProvider>
+                    </UserProvider>
                 </AuthProvider>
 
             </body>
