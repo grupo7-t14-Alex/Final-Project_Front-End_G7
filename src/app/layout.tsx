@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { AuthProvider } from '../context/Auth.Context'
 import { NextRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
+import { CarsProvider } from "@/context/Cars.Context";
 
 
 interface RootLayoutProps {
@@ -28,7 +29,9 @@ export default function RootLayout({ children, router }: RootLayoutProps) {
             <body className={inter.className}>
                 
                 <AuthProvider router={router}>
+                 <CarsProvider>
                     {children}
+                 </CarsProvider> 
                 </AuthProvider>
 
             </body>
