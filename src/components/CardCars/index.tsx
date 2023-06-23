@@ -7,7 +7,7 @@ import { carsContext } from "@/context/Cars.Context"
 
 
 const CardCars = () => {
-    const {cars, setLop, lop} = useContext(carsContext)
+    const {cars, setLop, lop, hiddenFilter, setHiddenFilter} = useContext(carsContext)
 
     useEffect(()=>{
 
@@ -15,8 +15,8 @@ const CardCars = () => {
  
     return(
        <>
-         <button onClick={()=> setLop(!lop)}>limpar filtro</button>
-         <ul className="flex flex-row overflow-auto gap-14  md:grid grid-cols-2 lg:grid-cols-3 lg:overflow-visible gap-15 p-4">
+         {hiddenFilter && <button onClick={()=> {setLop(!lop); setHiddenFilter(false)}} className="w-40 h-12 rounded bg-brand-2 text-white">limpar filtro</button>}
+         <ul className="w-full lg:w-full flex flex-row gap-14  lg:flex-wrap gap-15 p-4">
             {cars.map((car) => (
                 <CardCar key={car.id} car={car} />
             ))}

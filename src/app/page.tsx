@@ -28,9 +28,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="grid grid-rows-1 p-1 lg:grid-cols-5">
+      <div className="grid grid-rows-1 p-1 lg:flex lg:flex-row overflow-x-auto">
         <Filter/>
-        <div className="w-full overflow-auto p-1 md:col-span-4 flex flex-col space-y-5 lg:overflow-visible ">
+        <div className="w-full flex flex-col">
             <CardCars/>
           <div className="hidden lg:flex flex-col justify-center">
             <span className="flex flex-row justify-center gap-4 line-clamp-1">1</span>
@@ -41,7 +41,7 @@ export default function Home() {
           </div>
         </div>
         <div className="w-full flex flex-col space-y-6 my-4 md:col-span-4 lg:hidden">
-          <button type="button" className="w-full py-2 px-4 text-white bg-purple-800 hover:bg-purple-900 rounded-md" onClick={()=> setFilterModal(!filterModal)}>Filtro</button>
+          <button type="button" className=" w-64 py-2 px-4 text-white bg-purple-800 hover:bg-purple-900 rounded-md" onClick={()=> setFilterModal(!filterModal)}>Filtro</button>
           <div className="flex flex-col justify-center">
             <span className="flex flex-row justify-center gap-4 line-clamp-1">1</span>
             <div className="flex flex-row justify-center space-x-6">

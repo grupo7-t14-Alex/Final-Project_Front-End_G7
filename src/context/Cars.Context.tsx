@@ -16,6 +16,8 @@ interface CarsContextProps {
     lop: boolean
     setFilterModal: (filterModal: boolean) => void
     filterModal: boolean
+    hiddenFilter: boolean
+    setHiddenFilter: (hiddenFilter: boolean) => void
 }
 
 export const carsContext = createContext({} as CarsContextProps)
@@ -25,6 +27,7 @@ export const CarsProvider = ({children}:ChildrenProps) =>{
     const [cars, setCars ] = useState<CarProps[]>([])
     const [lop, setLop] = useState(false)
     const [filterModal , setFilterModal] = useState(false)
+    const [hiddenFilter, setHiddenFilter] = useState(false)
     useEffect(()=> {
         const getCars = async () => {
             try {
@@ -56,14 +59,29 @@ export const CarsProvider = ({children}:ChildrenProps) =>{
             if(key === 'fuels') {
                 return car.fuel == filter
             }
+            if(key === 'km') {
+                return car.milage <= parseInt(filter)
+            }
+
+            if(key === 'kmMax') {
+                return car.milage >= parseInt(filter)
+            }
+            if(key === 'price') {
+                return car.price <= parseInt(filter)
+            }
+            if(key === 'priceMax') {
+                return car.price >= parseInt(filter)
+            }
+
         })
 
         if(filteredCar.length >= 1){
+            setHiddenFilter(true)
             setCars(filteredCar)
         }
     }
     return(
-        <carsContext.Provider value={{cars, filteredCars, setLop, lop, filterModal, setFilterModal}}>
+        <carsContext.Provider value={{cars, filteredCars, setLop, lop, filterModal, setFilterModal, hiddenFilter, setHiddenFilter}}>
             {children}
         </carsContext.Provider>
     )
