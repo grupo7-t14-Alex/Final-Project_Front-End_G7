@@ -16,7 +16,7 @@ import { UserContext } from "@/context/User.Context";
 
 interface StatusModelType {
     openModalUp: boolean
-    setOpenModalUp: React.Dispatch<React.SetStateAction<boolean>>
+    setOpenModalUp: React.Dispatch<React.SetStateAction<boolean>> 
 }
 
 export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelType) => {

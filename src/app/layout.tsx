@@ -31,11 +31,11 @@ export default function RootLayout({ children, router }: RootLayoutProps) {
             <body className={inter.className}>
 
                 <AuthProvider router={router}>
-                    <UserProvider>
+                    {/* <UserProvider> */}
                       <CarsProvider>
                         {children}
                       </CarsProvider>
-                    </UserProvider>
+                    {/* </UserProvider> */}
                 </AuthProvider>
 
             </body>

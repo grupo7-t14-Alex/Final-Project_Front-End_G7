@@ -19,6 +19,9 @@ interface iUserProviderChildren {
 }
 
 interface iProviderValue {
+    openModalUp: boolean;
+    setOpenModalUp: React.Dispatch<React.SetStateAction<boolean>>;
+    token: RequestCookie | undefined
     userId: RequestCookie | undefined
     toggleModal: (statusModel: boolean, setModel: React.Dispatch<React.SetStateAction<boolean>>) => void
     updateUser: (data: updateUserSchemaType, toggleModalStats: boolean, toggleModalSet: React.Dispatch<React.SetStateAction<boolean>>) => Promise<void>
@@ -31,11 +34,13 @@ export const UserProvider = async ({
 }: iUserProviderChildren) => {
     const cookiesStore = cookies();
     const userId: RequestCookie | undefined = cookiesStore.get("@id");
+    const token: RequestCookie | undefined = cookiesStore.get("@token");
 
     const toggleModal = (statusModel: boolean, setModel: React.Dispatch<React.SetStateAction<boolean>>) => {
         setModel(!statusModel)
     }
 
+    const [openModalUp, setOpenModalUp] = useState<boolean>(false);
     const updateUser = async (data: updateUserSchemaType, toggleModalStats: boolean, toggleModalSet: React.Dispatch<React.SetStateAction<boolean>>) => {
         try {
             await Api.patch(`/users/${userId}`, data);
@@ -80,6 +85,9 @@ export const UserProvider = async ({
     return (
         <UserContext.Provider
             value={{
+                openModalUp,
+                setOpenModalUp,
+                token,
                 toggleModal,
                 updateUser,
                 userId,

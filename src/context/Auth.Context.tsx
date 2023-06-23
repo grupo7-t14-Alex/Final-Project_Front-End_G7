@@ -24,6 +24,7 @@ export interface iInfoLogin {
   password: string;
 }
 interface iProviderValue {
+  token: string;
   loginFunction(infoLogin: iInfoLogin): Promise<void>;
   userLogin: iInfoUser | null;
   registerFunction: (infoRegister: registerSchemaType) => Promise<void>;
@@ -113,23 +114,36 @@ export const AuthProvider = ({
 
   useEffect(() => {
     const findUser = async (id: string) => {
-      const response = await Api.get(`/users/${id}`);
-      const user = response.data;
-      setUser(user);
+
+      try {
+        const response = await Api.get(`/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        
+        setUser(response.data);
+      } catch (error) {
+        console.log(error)
+      }
     };
+  
     if (userId) {
       findUser(userId);
     }
-  }, []);
+  }, [userId]);
 
   const findSeller = async (id: string) => {
-    const response = await Api.get(`/users/${id}`);
+    const response = await Api.get(`/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     const seller = response.data;
     return seller;
   };
 
   const sendEmail = (email: SendEmailData) => {
-    console.log(email);
     Api.post("users/resetpass", email)
       .then(() => {
         toast.success("Login realizado com Sucesso!");
@@ -156,6 +170,7 @@ export const AuthProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        token,
         resetPassword,
         sendEmail,
         protectRoutes,

@@ -40,12 +40,15 @@ interface Cars {
 }
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
+
   const { user, findSeller, protectRoutes } = useContext(AuthContext);
+
   protectRoutes();
 
   const sellerId = params.id;
   const seller: Seller = await findSeller(sellerId);
   const currentUser: Seller = user;
+
 
   return (
     <>
