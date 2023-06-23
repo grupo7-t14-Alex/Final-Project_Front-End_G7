@@ -13,6 +13,7 @@ import { cookies } from 'next/dist/client/components/headers';
 import { AuthContext } from '@/context/Auth.Context';
 import { Seller } from './seller/[id]/page';
 import { ProfileMenu } from '@/components/profileMenu';
+import { useRouter } from 'next/router';
 
 
 
@@ -22,7 +23,8 @@ export default function Home() {
   const { token, user } = useContext(AuthContext)
   
   const currentUser: Seller = user;
-  
+
+
   return (
     <>
     <main className="container mx-auto">

@@ -20,8 +20,8 @@ export const ProfileMenu = ({ user }: ProfileMenuProps) => {
   async function logout() {
     destroyCookie(null, "@token");
     destroyCookie(null, "@id"); 
-    router.refresh
     router.push("/");
+    router.refresh()
   }
 
 

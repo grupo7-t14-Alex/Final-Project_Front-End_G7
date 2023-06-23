@@ -6,14 +6,16 @@ import { Header } from "@/components/header";
 import { Input } from "@/components/inputs/input";
 import { AuthContext } from "@/context/Auth.Context";
 import {
-  ResetPasswordData,
-  SendEmailData,
+  ResetPasswordData, 
   resetPasswordSchema,
 } from "@/schema/sendEmail.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const ResetPasswordPageToken = ({ params }: { params: { token: string } }) => {
   const token = params.token;
@@ -36,6 +38,18 @@ const ResetPasswordPageToken = ({ params }: { params: { token: string } }) => {
 
   return (
     <>
+     <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Header>
         <Link
           href={"/login"}
