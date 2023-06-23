@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { ModalUpdate } from "../modal/modalEditUser";
 
 interface ProfileMenuProps {
-  user: Seller;
+  user: Seller; 
 }
 
 export const ProfileMenu = ({ user }: ProfileMenuProps) => {
@@ -27,7 +27,6 @@ export const ProfileMenu = ({ user }: ProfileMenuProps) => {
 
   return (
     <>
-      { openModalUp && <ModalUpdate openModalUp={openModalUp} setOpenModalUp={setOpenModalUp}/>}
       <div className="z-10 profile-menu">
         <ul className="w-full flex flex-col gap-2">
           <li className="w-full">

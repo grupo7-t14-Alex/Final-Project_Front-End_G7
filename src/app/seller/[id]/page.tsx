@@ -8,6 +8,8 @@ import UserInfos from "@/components/infoUser/infoUser";
 import { ProfileMenu } from "@/components/profileMenu";
 import { useContext } from "react";
 import { AuthContext } from "@/context/Auth.Context";
+import { ModalUpdate } from "@/components/modal/modalEditUser";
+import { UserContext } from "@/context/User.Context";
 
 export interface Seller {
   id: string;
@@ -42,11 +44,13 @@ interface Cars {
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
 
   const { user, findSeller, protectRoutes } = useContext(AuthContext);
+  const { openModalUp, setOpenModalUp } = useContext(UserContext)
 
   protectRoutes();
 
   const sellerId = params.id;
   const seller: Seller = await findSeller(sellerId);
+
   const currentUser: Seller = user;
 
 
@@ -63,7 +67,9 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
           <ProfileMenu user={currentUser} />
         </div>
       </Header>
+
       <main className="gradient w-full h-max flex flex-col mx-auto items-center">
+      { openModalUp && <ModalUpdate openModalUp={openModalUp} setOpenModalUp={setOpenModalUp}/>}
         <UserInfos seller={seller} sellerId={sellerId} />
 
         <ul className="w-[90%] h-500 my-24 flex flex-row overflow-x-auto items-center justify-start gap-8 md:flex-wrap md:h-max">

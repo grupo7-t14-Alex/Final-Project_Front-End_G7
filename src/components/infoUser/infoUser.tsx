@@ -7,7 +7,8 @@ import { ModalAnnouncement } from "../modal/modalAnnouncement"
 
 
 
-export const UserInfos = ({seller}: any) => {
+export const UserInfos = ({seller}: any) => { 
+  console.log(seller)
 
     const {openModal, setOpenModel} = useContext(FipeContext)
 

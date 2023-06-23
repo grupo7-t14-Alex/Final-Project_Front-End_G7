@@ -18,6 +18,7 @@ import { Api } from "@/services/Api";
 import { FipeContext } from "@/context/KenzieApi.Context";
 
 export const ModalAnnouncement = ({ sellerId }: any) => {
+
   const { AllCars, BrandCars, setOpenModel, GetFipeQuery, Querybrand } =
     useContext(FipeContext);
 
@@ -38,7 +39,7 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
   });
 
   const onSubmit = async (data: createCarSchemaType) => {
-    console.log(data);
+
     if (isNaN(Number(data.milage))) {
       setIsNumberMilage(false);
     }
@@ -71,6 +72,7 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
       delete data.image2;
 
       Api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      console.log(data)
       await Api.post(`/cars`, data);
       setOpenModel(false);
       window.location.reload();

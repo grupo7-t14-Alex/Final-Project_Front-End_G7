@@ -114,14 +114,13 @@ export const AuthProvider = ({
 
   useEffect(() => {
     const findUser = async (id: string) => {
-
       try {
         const response = await Api.get(`/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        
+    
         setUser(response.data);
       } catch (error) {
         console.log(error)

@@ -27,7 +27,6 @@ export default function Home() {
 
   return (
     <>
-    <main className="container mx-auto">
       <Header>
         {!token ?
           <>
@@ -46,6 +45,8 @@ export default function Home() {
           </div>
         }
       </Header>
+
+      <main className="container mx-auto">
       <div className="z-1 bg-gradient-to-b from-gray-300 to-gray-0 h-96 w-full relative">
         <img src="https://www.assobrav.com.br/wp-content/uploads/2020/07/porsche-911-turbo-2021-4.jpg" alt="Imagem ilustrativa carro porsche"  className="w-full h-full object-cover absolute mix-blend-overlay" />
         <div className="h-full flex flex-col justify-center gap-5">
