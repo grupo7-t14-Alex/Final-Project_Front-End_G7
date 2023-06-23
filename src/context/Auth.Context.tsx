@@ -146,8 +146,10 @@ export const AuthProvider = ({
   const sendEmail = (email: SendEmailData) => {
     Api.post("users/resetpass", email)
       .then(() => {
-        toast.success("Login realizado com Sucesso!");
-        router.push("/");
+        toast.success("E-mail enviado com sucesso!");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -159,7 +161,9 @@ export const AuthProvider = ({
     Api.patch(`users/resetpass/${token}`, { password: password.password })
       .then(() => {
         toast.success("Senha atualizada com sucesso");
-        router.push("/login");
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);

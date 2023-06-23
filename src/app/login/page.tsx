@@ -101,9 +101,9 @@ export default function Login() {
               </p>
             )}
 
-            <button className="self-end mt-8 mb-8 hover:text-[#4529E6] hover:underline hover:scale-105">
+            <Link href={'/resetPassword'} className="self-end mt-8 mb-8 hover:text-[#4529E6] hover:underline hover:scale-105">
               Esqueci minha senha
-            </button>
+            </Link>
             <Button size="big" color="brand1" type="submit" className="w-full">
               Entrar
             </Button>
