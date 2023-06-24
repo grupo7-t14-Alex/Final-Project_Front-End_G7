@@ -33,6 +33,12 @@ interface iProviderValue {
   protectRoutes: () => void;
   sendEmail: (email: SendEmailData) => void;
   resetPassword: (password: ResetPasswordData, token: string) => void;
+  openModalUp: boolean;
+  setOpenModalUp: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalUpAddress: boolean;
+  setOpenModalUpAddress: React.Dispatch<React.SetStateAction<boolean>>;
+  openModalDelUser: boolean;
+  setOpenModalDelUser: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AuthProvider = ({
@@ -43,6 +49,9 @@ export const AuthProvider = ({
   const [user, setUser] = useState<Seller>({} as Seller);
 
   const [userLogin, setUserLogin] = useState<iInfoUser | null>(null);
+  const [openModalUp, setOpenModalUp] = useState<boolean>(false);
+  const [openModalUpAddress, setOpenModalUpAddress] = useState<boolean>(false);
+  const [openModalDelUser, setOpenModalDelUser] = useState<boolean>(false);
 
   const cookies = parseCookies();
   const userId = cookies["@id"];
@@ -120,13 +129,13 @@ export const AuthProvider = ({
             Authorization: `Bearer ${token}`
           }
         });
-    
+
         setUser(response.data);
       } catch (error) {
         console.log(error)
       }
     };
-  
+
     if (userId) {
       findUser(userId);
     }
@@ -182,6 +191,12 @@ export const AuthProvider = ({
         loginFunction,
         userLogin,
         registerFunction,
+        setOpenModalUp,
+        openModalUp,
+        openModalUpAddress,
+        setOpenModalUpAddress,
+        openModalDelUser,
+        setOpenModalDelUser
       }}
     >
       {children}

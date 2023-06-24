@@ -8,8 +8,6 @@ import UserInfos from "@/components/infoUser/infoUser";
 import { ProfileMenu } from "@/components/profileMenu";
 import { useContext } from "react";
 import { AuthContext } from "@/context/Auth.Context";
-import { ModalUpdate } from "@/components/modal/modalEditUser";
-import { UserContext } from "@/context/User.Context";
 
 export interface Seller {
   id: string;
@@ -44,7 +42,7 @@ interface Cars {
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
 
   const { user, findSeller, protectRoutes } = useContext(AuthContext);
-  const { openModalUp, setOpenModalUp } = useContext(UserContext)
+
 
   protectRoutes();
 
@@ -69,17 +67,16 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
       </Header>
 
       <main className="gradient w-full h-max flex flex-col mx-auto items-center">
-      { openModalUp && <ModalUpdate openModalUp={openModalUp} setOpenModalUp={setOpenModalUp}/>}
         <UserInfos seller={seller} sellerId={sellerId} />
 
         <ul className="w-[90%] h-500 my-24 flex flex-row overflow-x-auto items-center justify-start gap-8 md:flex-wrap md:h-max">
           {currentUser.id === seller.id
             ? seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
             : seller.cars.map((car) =>
-                car.published ? (
-                  <UserCard key={car.id} car={car} seller={seller} />
-                ) : null
-              )}
+              car.published ? (
+                <UserCard key={car.id} car={car} seller={seller} />
+              ) : null
+            )}
         </ul>
         <span className="flex flex-row justify-center gap-4 line-clamp-1">
           1

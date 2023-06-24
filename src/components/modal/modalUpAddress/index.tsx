@@ -1,54 +1,52 @@
-"use client";
+'use client';
+
+
+import { useContext, useState } from 'react';
+import { ModalWrapper } from '..';
 import Image from "next/image";
 import closeModal from "../../../../public/assets/close-modal.png";
-import { ModalWrapper } from "..";
-import { Input } from "@/components/inputs/input";
+import { AuthContext } from '@/context/Auth.Context';
+import { useForm } from 'react-hook-form';
+import { schemaAddress, updateUserAddressSchemaType } from '@/schema/register.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import styles from '@/components/modal/modalAnnouncement/style.module.css'
-import { Button } from "@/components/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Api } from "@/services/Api";
-import { schemaAddress, updateUserAddressSchemaType } from "@/schema/register.schema";
-import { cookies } from "next/dist/client/components/headers";
-import { toast } from "react-toastify";
-import { useContext } from "react";
-import { UserContext } from "@/context/User.Context";
+import { Input } from '@/components/inputs/input';
+import { Button } from '@/components/button';
+import { Api } from '@/services/Api';
+import { toast } from 'react-toastify';
 
-
-interface StatusModelType {
-    openModalUpAdrress: boolean
-    setOpenModalUpAddress: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-interface UserAddress {
-    cep: string
-    state: string
-    city: string
-    street: string
-    number: string
-    complement: string
-}
-
-export const ModalUpAddress = async ({ openModalUpAdrress, setOpenModalUpAddress }: StatusModelType) => {
-    const { userId, updateAddress } = useContext(UserContext)
-
-    const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
-
-    const currentUserAddress: UserAddress = responseCurrentUser.data.address;
-    const addressId: string = responseCurrentUser.data.address.id
+const ModalUpAddress = () => {
+    const { token, user, openModalUpAddress, setOpenModalUpAddress } = useContext(AuthContext);
+    const addressId: string = user.address.id
+    const currentUserAddress = user.address
 
     const { register, handleSubmit, formState: { errors } } = useForm<updateUserAddressSchemaType>({
         mode: 'onBlur',
         resolver: zodResolver(schemaAddress)
     })
 
+
     const onSubmit = async (data: updateUserAddressSchemaType) => {
-        updateAddress(addressId, data, openModalUpAdrress, setOpenModalUpAddress)
+        try {
+            await Api.patch(`/address/${addressId}`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            toast.success("Usuario Atualizado com Sucesso!");
+            setTimeout(() => {
+                setOpenModalUpAddress(!openModalUpAddress)
+            }, 2000);
+        } catch (error) {
+            console.log(error)
+            toast.error("Algo deu errado ao salvar alterações!");
+        }
     }
 
     return (
         <ModalWrapper>
-            <form className={`py-[18px] px-[24px] w-[520px] fixed h-4/5 rounded-lg overflow-y-auto bg-[#FFFFFF] my-custom-scroll ${styles["my-custom-scroll"]} `} onSubmit={handleSubmit(onSubmit)}>
+            <form className={`py-[18px] px-[24px] w-[520px] fixed h-4/5 rounded-lg overflow-y-auto bg-[#FFFFFF] my-custom-scroll ${styles["my-custom-scroll"]}`} onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex justify-between items-center">
                     <h3 className="text-gray-100 font-bold text-base">
                         Editar Perfil
@@ -59,7 +57,7 @@ export const ModalUpAddress = async ({ openModalUpAdrress, setOpenModalUpAddress
                         width={30}
                         height={30}
                         className="cursor-pointer"
-                        onClick={() => setOpenModalUpAddress(!openModalUpAdrress)}
+                        onClick={() => setOpenModalUpAddress(!openModalUpAddress)}
                     />
                 </div>
 
@@ -102,7 +100,7 @@ export const ModalUpAddress = async ({ openModalUpAdrress, setOpenModalUpAddress
                     {errors.complement?.message && <p className='text-[14px] text-red-500'>{errors.complement?.message}</p>}
 
                     <div className="flex w-full justify-center space-x-4 ">
-                        <Button size='medium' color='grey6' className='mt-8 w-full' type='button' onClick={() => setOpenModalUpAddress(!openModalUpAdrress)}>Cancelar</Button>
+                        <Button size='medium' color='grey6' className='mt-8 w-full' type='button' onClick={() => setOpenModalUpAddress(!openModalUpAddress)}>Cancelar</Button>
                         <Button size='medium' color='brand1' className='mt-8 w-full' type='submit'>Salvar Atualização</Button>
                     </div>
 
@@ -111,3 +109,5 @@ export const ModalUpAddress = async ({ openModalUpAdrress, setOpenModalUpAddress
         </ModalWrapper>
     );
 };
+
+export default ModalUpAddress;
