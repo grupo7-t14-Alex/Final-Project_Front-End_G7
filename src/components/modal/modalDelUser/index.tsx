@@ -6,21 +6,42 @@ import styles from '@/components/modal/modalAnnouncement/style.module.css'
 import { Button } from "@/components/button";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { useContext } from "react";
-import { UserContext } from "@/context/User.Context";
+import { AuthContext } from "@/context/Auth.Context";
+import { Api } from "@/services/Api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { destroyCookie } from "nookies";
 
-interface StatusModelType {
-    userId: RequestCookie | undefined
-    openModalDeleteUser: boolean
-    setOpenModalDeleteUser: React.Dispatch<React.SetStateAction<boolean>>
-    openModalUp: boolean
-    setOpenModalUp: React.Dispatch<React.SetStateAction<boolean>>
-}
 
-export const ModalDeleteUser = ({ userId, openModalUp, setOpenModalUp, openModalDeleteUser, setOpenModalDeleteUser }: StatusModelType) => {
-    const { deleteUser } = useContext(UserContext)
+const ModalDeleteUser = () => {
+
+    const { token, user, openModalDelUser, setOpenModalDelUser } = useContext(AuthContext);
+
+    const userId: string = user.id
+
+    const router = useRouter();
+    async function logout() {
+        destroyCookie(null, "@token");
+        destroyCookie(null, "@id");
+        router.push("/");
+        router.refresh()
+    }
 
     const onSubmit = async () => {
-        deleteUser(userId, openModalUp, setOpenModalUp, openModalDeleteUser, setOpenModalDeleteUser)
+        try {
+            await Api.delete(`/users/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            toast.success("Usuario deletado com Sucesso!");
+            setTimeout(() => {
+                logout()
+            }, 2000);
+        } catch (error) {
+            toast.error("Algo deu errado ao deletar usuário!");
+        }
     }
 
     return (
@@ -36,7 +57,7 @@ export const ModalDeleteUser = ({ userId, openModalUp, setOpenModalUp, openModal
                         width={30}
                         height={30}
                         className="cursor-pointer"
-                        onClick={() => setOpenModalDeleteUser(!openModalDeleteUser)}
+                        onClick={() => setOpenModalDelUser(!openModalDelUser)}
                     />
                 </div>
 
@@ -48,8 +69,8 @@ export const ModalDeleteUser = ({ userId, openModalUp, setOpenModalUp, openModal
                     </div>
 
                     <div className="flex w-full justify-end space-x-4 ">
-                        <Button size='medium' color='grey6' className='mt-8 w-full' type='button' onClick={() => setOpenModalDeleteUser(!openModalDeleteUser)} >Cancelar</Button>
-                        <Button size='medium' color='alert' className='mt-8 w-full' type='submit'>Excluir conta</Button>
+                        <Button size='medium' color='grey6' className='mt-8 w-full' type='button' onClick={() => setOpenModalDelUser(!openModalDelUser)} >Cancelar</Button>
+                        <Button size='medium' color='alert' className='mt-8 w-full' type='submit' onClick={() => onSubmit()}>Excluir conta</Button>
                     </div>
 
                 </div>
@@ -57,3 +78,5 @@ export const ModalDeleteUser = ({ userId, openModalUp, setOpenModalUp, openModal
         </ModalWrapper>
     );
 };
+
+export default ModalDeleteUser
