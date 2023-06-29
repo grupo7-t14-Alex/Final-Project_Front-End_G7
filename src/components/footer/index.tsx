@@ -11,7 +11,7 @@ export const Footer = () => {
                     alt="Motor Shop"
                 />
             </figure>
-            <p className="text-sm select-none">© 2022 - Todos os direitos reservados.</p>
+            <p className="text-sm select-none text-[#FFFFFF]">© 2022 - Todos os direitos reservados.</p>
             <a
                 href="#header-top"
                 className="px-[21px] py-[16px] bg-[#212529] rounded"
