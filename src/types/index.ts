@@ -1,6 +1,7 @@
 
 interface UserCarProps {
     name: string;
+    description?: string;
 }
 
 export interface CarProps {
