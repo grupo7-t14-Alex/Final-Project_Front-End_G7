@@ -3,8 +3,6 @@ import car from "../../img/car.png";
 import minCar from "../../img/minCar.png";
 import Image from "next/image";
 import Link from "next/link";
-
-
 const CarDetails = () => {
   
   return (
