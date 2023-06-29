@@ -1,4 +1,6 @@
 import { Button } from "@/components/button";
+import { carsContext } from "@/context/Cars.Context";
+import { useContext } from "react";
 
 interface SellerCardProps {
   car: Cars;
@@ -22,6 +24,7 @@ interface Cars {
 }
 
 export const SellerCard = ({ car }: SellerCardProps) => {
+  const { openModalUpCars, setOpenModalUpCars, setCarId } = useContext(carsContext);
   return (
     <li
       key={car.id}
@@ -41,7 +44,7 @@ export const SellerCard = ({ car }: SellerCardProps) => {
           src={car.coverPhoto}
           alt="Imagem de carro"
           className="w-full h-full"
-          onError={(e) => {
+          onError={(e: any) => {
             e.target.onerror = null;
             e.target.src =
               "https://img2.gratispng.com/20180807/esr/kisspng-sports-car-clip-art-computer-icons-vector-graphics-fav02-avto-magic-5b69fe4d3d7f75.6996915515336730372519.jpg";
@@ -65,7 +68,10 @@ export const SellerCard = ({ car }: SellerCardProps) => {
           <span className=" text-gray-0 font-bold">R$ {car.price},00</span>
         </div>
         <div className="flex flex-row gap-5">
-          <Button size="medium" color="btnCard">
+          <Button size="medium" color="btnCard" onClick={() => {
+            setCarId(car.id)
+            setOpenModalUpCars(!openModalUpCars)
+          }}>
             Editar
           </Button>
           <Button size="medium" color="btnCard">
