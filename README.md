@@ -1,4 +1,4 @@
-# Olá, sejá bem vindo Projeto Front End => Motors Shop
+# Olá, sejá bem vindo ao Front End => Motors Shop
 
 ## Tabela de Conteúdos
 
