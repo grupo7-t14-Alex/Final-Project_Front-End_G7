@@ -16,7 +16,6 @@ import { ProfileMenu } from '@/components/profileMenu';
 import { useRouter } from 'next/router';
 
 
-
 export default function Home() {
 
   const {filterModal, setFilterModal } = useContext(carsContext)

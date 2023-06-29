@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { AuthProvider } from '../context/Auth.Context'
 import { NextRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
-import { UserProvider } from "@/context/User.Context";
+import { UserProvider } from "@/context/User.Context"; 
 import { CarsProvider } from "@/context/Cars.Context";
 
 
