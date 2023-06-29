@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import closeModal from "../../../../public/assets/close-modal.png";
 import { ModalWrapper } from "..";
@@ -7,25 +8,26 @@ import styles from '@/components/modal/modalAnnouncement/style.module.css'
 import { Button } from "@/components/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useState } from "react";
+import { useContext, useId, useState } from "react";
 import { Api } from "@/services/Api";
 import { schema, updateUserSchemaType } from "@/schema/register.schema";
 import { ModalDeleteUser } from "../modalDeleteUser";
 import { Seller } from "@/app/seller/[id]/page";
 import { UserContext } from "@/context/User.Context";
+import { AuthContext } from "@/context/Auth.Context";
 
 interface StatusModelType {
     openModalUp: boolean
     setOpenModalUp: React.Dispatch<React.SetStateAction<boolean>> 
 }
 
-export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelType) => {
-
+export const ModalUpdate = async () => {
+    const { user } = useContext(AuthContext)
     const { updateUser, userId } = useContext(UserContext)
 
-    const responseCurrentUser = await Api.get(`/users/${userId?.value}`);
+    
 
-    const currentUser: Seller = responseCurrentUser.data;
+    const currentUser: Seller = user
 
     const { register, handleSubmit, formState: { errors } } = useForm<updateUserSchemaType>({
         mode: 'onBlur',
@@ -47,7 +49,7 @@ export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelTy
         }
         const newData = { ...data, seller: activeButton };
 
-        updateUser(newData, openModalUp, setOpenModalUp)
+        updateUser(newData)
     }
 
     return (
@@ -63,7 +65,7 @@ export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelTy
                         width={30}
                         height={30}
                         className="cursor-pointer"
-                        onClick={() => setOpenModalUp(!openModalUp)}
+                       
                     />
                 </div>
                 <p className="text-gray-000 text-sm font-medium mt-4 mb-6">
@@ -118,16 +120,16 @@ export const ModalUpdate = async ({ openModalUp, setOpenModalUp }: StatusModelTy
                     {errors.confirmPass?.message && <p className='text-[14px] text-red-500'>{errors.confirmPass?.message}</p>}
 
                     <div className="flex w-full justify-center space-x-4 ">
-                        <Button size='medium' color='grey6' className='mt-8 w-full' type='button' onClick={() => setOpenModalUp(!openModalUp)}>Cancelar</Button>
-                        <Button size='medium' color='alert' className='mt-8 w-full' type='button' onClick={() => setOpenModalDeleteUser(!openModalDeleteUser)}>Excluir Perfil</Button>
+                        <Button size='medium' color='grey6' className='mt-8 w-full' type='button' >Cancelar</Button>
+                        <Button size='medium' color='alert' className='mt-8 w-full' type='button' >Excluir Perfil</Button>
                         <Button size='medium' color='brand1' className='mt-8 w-full' type='submit'>Salvar Atualização</Button>
                     </div>
 
                 </div>
             </form>
-            {
+            {/* {
                 openModalDeleteUser && <ModalDeleteUser setOpenModalUp={setOpenModalUp} openModalUp={openModalUp} setOpenModalDeleteUser={setOpenModalDeleteUser} openModalDeleteUser={openModalDeleteUser} userId={userId} />
-            }
+            } */}
         </ModalWrapper>
     );
 };

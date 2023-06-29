@@ -1,35 +1,46 @@
+"use client"
+
 import { Header } from "@/components/header";
-import car from "../../img/car.png";
-import minCar from "../../img/minCar.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
+import { carsContext } from "@/context/Cars.Context";
+import { useRouter } from "next/navigation";
 
 
-const CarDetails = () => {
-  
+
+
+const CarDetails = async ({ params }: { params: { id: string } }) => {
+  const {getCarDetails} = useContext(carsContext)
+  const router = useRouter()
+  const car = await getCarDetails(params.id)
+  const carDetail = car
+  if(!carDetail) {
+    return null
+  }
   return (
     <>
-              <Header>
+            <Header>
                 <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
                 <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
             </Header>
-      <main className="gradient w-full h-screen">
+      <main className="gradient w-full h-full">
         <div className="w-[90%] mx-auto">
           <div className="flex flex-col md:flex-row w-full">
             <section className="md:w-[60%]">
               <figcaption className="fig-image">
-                <Image src={car} alt="carro" />
+                <img src={carDetail.coverPhoto} alt="carro" />
               </figcaption>
               <div className="car-info">
                 <h1 className=" text-xl font-semibold ">
-                  Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200{" "}
+                  {carDetail.brand} - {carDetail.model}
                 </h1>
                 <div className="car-info-2">
                   <div className="flex gap-3 ">
-                    <span className="car-span">2013</span>
-                    <span className="car-span">0 KM</span>
+                    <span className="car-span">{carDetail.year}</span>
+                    <span className="car-span">{carDetail.milage} KM</span>
                   </div>
-                  <p className="text-base font-semibold">R$ 00.000,00</p>
+                  <p className="text-base font-semibold">{carDetail.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>
                 <button className="button-buy">Comprar</button>
               </div>
@@ -38,11 +49,7 @@ const CarDetails = () => {
                   Descrição
                 </h1>
                 <p className="text-gray-200 text-base">
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
+                 {carDetail.description}
                 </p>
               </div>
             </section>
@@ -50,37 +57,23 @@ const CarDetails = () => {
               <figcaption className="fig-images">
                 <h1 className=" text-gray-100 text-xl font-semibold">fotos</h1>
                 <ul className="list-cars">
-                  <li className="car-images">
-                    <Image src={minCar} alt="foto de carro" />
-                  </li>
-                  <li className="car-images">
-                    <Image src={minCar} alt="foto de carro" />
-                  </li>
-                  <li className="car-images">
-                    <Image src={minCar} alt="foto de carro" />
-                  </li>
-                  <li className="car-images">
-                    <Image src={minCar} alt="foto de carro" />
-                  </li>
-                  <li className="car-images">
-                    <Image src={minCar} alt="foto de carro" />
-                  </li>
-                  <li className="car-images">
-                    <Image src={minCar} alt="foto de carro" />
-                  </li>
+                  {carDetail.gallery.map((img)=> (
+                    <li key={img} className="car-images">
+                      <img src={img} alt="foto de carro" />
+                    </li>
+                  ))}
                 </ul>
               </figcaption>
               <div className="user-card">
                 <div className="user-card-2">
                   <span className="user-img-profile">SL</span>
                   <h2 className="text-xl text-gray-100 font-semibold">
-                    Samuel Leão
+                    {carDetail.user.name}
                   </h2>
                   <p className="text-gray-200 text-base">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industr
+                    {carDetail.user.description}
                   </p>
-                  <button className="btn-user">Ver todos anuncios</button>
+                  <button className="btn-user" onClick={()=> router.push(`/seller/${carDetail.userId}`)}>Ver todos anuncios</button>
                 </div>
               </div>
             </section>
@@ -145,8 +138,8 @@ const CarDetails = () => {
                   Samuel Leão
                 </h4>
               </div>
-              <textarea rows={4} color="50" className="textarea">
-                Carro muito confortável, foi uma ótima experiência de compra...
+              <textarea rows={4} color="50" className="textarea" defaultValue={"Carro muito confortável, foi uma ótima experiência de compra..."}>
+                
               </textarea>
               <button className="btn-coments">Comentar</button>
               <div className="flex gap-2">

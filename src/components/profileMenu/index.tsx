@@ -27,11 +27,11 @@ export const ProfileMenu = ({ user }: ProfileMenuProps) => {
 
   return (
     <>
-      { openModalUp && <ModalUpdate openModalUp={openModalUp} setOpenModalUp={setOpenModalUp}/>}
+      { openModalUp && <ModalUpdate />}
       <div className="z-10 profile-menu">
         <ul className="w-full flex flex-col gap-2">
           <li className="w-full">
-            <button className="w-full"onClick={() => setOpenModalUp(true)} >Editar Perfil</button>
+            <button className="w-full" onClick={()=> setOpenModalUp(true)} >Editar Perfil</button>
           </li>
           <li className="w-full">
             <button className="w-full">Editar Endereço</button>

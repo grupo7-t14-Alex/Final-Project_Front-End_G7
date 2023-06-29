@@ -18,6 +18,7 @@ interface CarsContextProps {
     filterModal: boolean
     hiddenFilter: boolean
     setHiddenFilter: (hiddenFilter: boolean) => void
+    getCarDetails: (id: string) => Promise<CarProps | undefined>
 }
 
 export const carsContext = createContext({} as CarsContextProps)
@@ -56,7 +57,7 @@ export const CarsProvider = ({children}:ChildrenProps) =>{
             if(key === 'color') {
                 return car.color == filter
             }
-            if(key === 'fuels') {
+            if(key === 'fuel') {
                 return car.fuel == filter
             }
             if(key === 'km') {
@@ -80,8 +81,18 @@ export const CarsProvider = ({children}:ChildrenProps) =>{
             setCars(filteredCar)
         }
     }
+
+    const getCarDetails = async (id: string) =>{
+        try {
+            const { data } = await Api.get<CarProps>(`/cars/${id}`)
+
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return(
-        <carsContext.Provider value={{cars, filteredCars, setLop, lop, filterModal, setFilterModal, hiddenFilter, setHiddenFilter}}>
+        <carsContext.Provider value={{cars, filteredCars, setLop, lop, filterModal, setFilterModal, hiddenFilter, setHiddenFilter, getCarDetails}}>
             {children}
         </carsContext.Provider>
     )
