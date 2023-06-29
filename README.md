@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Olá, sejá bem vindo Projeto Front End => Motors Shop
 
-## Getting Started
+## Tabela de Conteúdos
 
-First, run the development server:
+- [Visão Geral](#1-visão-geral)
+- [Início Rápido](#2-início-rápido)
+  - [Instalando dependências](#21-instalando-dependências)
+  - [Rodando a aplicação](#22-rodando-a-aplicação)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+---
+
+## 1. Visão Geral
+
+[ Voltar para o topo ](#tabela-de-conteúdos)
+
+Trata-se de uma aplicação front-end que utiliza a [API Motors Shop](https://github.com/grupo7-t14-Alex/Final-Project_Back-End_G7) e a [API kenzie Kars](https://kenzie-kars.herokuapp.com/). A aplicação possui cadastro e login de usuário, proteção de rotas com JWT, outologuin, além alem do CRUD completo para usuário, endereço, carros e comentarios. Possui um layout clean e de fácil entendimento, com filtros que auxiliam a pesquisa por carros, sempre trazendo uma resposta imediata ao usuário.
+As tecnologias utilizadas foram:
+
+- [Next.JS](https://docs.nestjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Taiwind](https://v2.tailwindcss.com/docs)
+- [Zod](https://zod.dev/)
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [Nookies](https://www.npmjs.com/package/nookies)
+- [Toastify](https://fkhadra.github.io/react-toastify/introduction/)
+
+---
+
+## 2. Início Rápido
+
+[ Voltar para o topo ](#tabela-de-conteúdos)
+
+### 2.1. Instalando Dependências
+
+Clone o projeto em sua máquina e instale as dependências com o comando:
+
+```shell
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2.2 Rodando a aplicação
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para rodar a aplicação, utilize o comando:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+npm run dev
+```
+Em seguida, acesse seu navegador em: http://localhost:5173/
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Obs: Lembre de clonar e executar o repositório do Backend deste projeto para poder utilizar todas suas funcionalidades.
+[Link Backend](https://github.com/grupo7-t14-Alex/Final-Project_Back-End_G7)
