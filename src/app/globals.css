@@ -1,101 +1,76 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
-
 @layer components {
   .gradient {
-    @apply bg-gradient-to-b from-brand-1 from-40% via-gray-800 via-30%  to-gray-800 to-40%;
+    @apply bg-gradient-to-b from-brand-1 from-25% via-gray-800 via-15%  to-gray-800 to-40%;
   }
   body {
     @apply bg-gray-800;
   }
-
   .fig-image {
     @apply w-[90%]  max-w-[750px] md:h-[355px] bg-white mt-6 rounded flex justify-center items-center;
   }
-
   .car-info {
     @apply w-[90%] max-w-[750px] bg-white   md:h-60 rounded p-5 flex flex-col gap-6 mt-5;
   }
-
   .car-info-2 {
     @apply flex gap-4 flex-col md:flex-row md:justify-between;
   }
-
   .car-span {
     @apply bg-brand-4 text-brand-1 w-12 h-5 rounded font-semibold text-center text-sm;
   }
-
   .button-buy {
     @apply w-24 h-9  border border-brand-1 bg-brand-1 text-white rounded;
   }
-
   .car-description {
     @apply w-[90%] max-w-[750px] bg-white   md:h-60 rounded p-5 flex flex-col gap-6 mt-6;
   }
-
   .fig-images {
     @apply w-[90%] md:max-w-[440px] max-h-96 bg-white  mt-6 p-4 rounded;
   }
-
   .list-cars {
     @apply flex gap-3 flex-wrap mt-6 max-h-96;
   }
-
   .car-images {
     @apply w-24 md:w-20 lg:w-32 h-16 bg-gray-700 rounded flex items-center justify-center;
   }
-
   .user-card {
     @apply w-[90%] md:max-w-md max-h-[426px] bg-white p-8  mt-6 rounded;
   }
-
   .user-card-2 {
     @apply flex flex-col justify-center items-center gap-6;
   }
-
   .user-img-profile {
     @apply w-20 h-20 bg-brand-1 rounded-full text-center text-white text-2xl flex justify-center items-center;
   }
-
   .btn-user {
     @apply w-52 h-12 bg-gray-0 text-white rounded;
   }
-
   .box-coments {
-    @apply w-[90%] md:w-[54%] lg:w-[54%] bg-white rounded  flex flex-col gap-6 mt-5  p-4;
+    @apply w-[90%] md:w-[54%] lg:w-[54%]  bg-white rounded  flex flex-col gap-6 mt-5  p-4;
   }
-
   .box-coments-2 {
     @apply w-full max-w-[663px] h-52 gap-5 mt-4;
   }
-
   .img-user-coment {
     @apply w-8 h-8 bg-random-1 text-center text-white text-sm rounded-full flex justify-center items-center;
   }
-
   .box-textarea {
-    @apply w-[90%] md:w-[54%] lg:w-[54%] bg-white rounded  flex flex-col gap-6 mt-5  p-4;
+    @apply w-[90%] md:w-[54%] lg:w-[54%]  bg-white rounded  flex flex-col gap-6 my-5  p-4;
   }
-
   .textarea {
     @apply border border-gray-700 text-gray-300 w-full h-32 p-2;
   }
-
   .btn-coments {
     @apply w-28 h-9 bg-brand-1 text-white rounded;
   }
-
   .span-textarea {
     @apply p-1 h-6 bg-gray-700 rounded-3xl text-gray-300 text-xs;
   }
-
   .profile-info {
     @apply w-[90%] max-w-[1240px] bg-white   h-auto rounded p-5 flex flex-col gap-6 mt-5;
   }
-
   .profile-menu {
     @apply p-3 bg-gray-1000 rounded absolute w-40 h-max top-16 -left-10 hidden group-hover:block;
   }
