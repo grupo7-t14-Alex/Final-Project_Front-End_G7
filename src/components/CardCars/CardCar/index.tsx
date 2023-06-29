@@ -1,32 +1,34 @@
 import { CarProps } from "@/types"
-import Image from "next/image"
-
+import { useRouter } from "next/navigation"
 interface Car{
     car: CarProps
 }
-
 const CardCar = ({car}:Car) => {
-    
+    const numeroAleatorio = Math.floor(Math.random() * 10) + 1
+    const num = `bg-${numeroAleatorio}`
+    const randomClass = `p-1 rounded-full text-white text-center bg-random-7`
+    const router = useRouter()
     return (
-        <li className="w-19.5 max-w-xs max-h-96 border rounded-md border-transparent">
-            <figure className="bg-brand-4 px-6 py-px">
-                <img src={car.coverPhoto} alt="imagem carro" />
-            </figure>
-                <div className="overflow-hidden p-4 flex flex-col gap-7 max-h-full">
-                    <h5 className="font-lexdend font-semibold text-base text-gray-0">{car.brand}-{car.brand}</h5>
-                    <p className="w-4/5 break-words font-inter font-normal text-sm text-gray-200 line-clamp-2">{car.description}</p>
-                    <div className="flex items-center gap-2" >
-                      <img src="https://rare-gallery.com/mocahbig/396683-wallpaper-satoru-gojo-jujutsu-kaisen-4k-hd.jpg" alt="profile image" className="w-8 h-8 rounded-full" />
-                      <span className="break-words font-inter font-medium text-sm text-gray-200">{car.user.name}</span>
-                    </div>
-                    <div className="w-11/12 grid grid-cols-4">
-                      <span className="font-inter font-medium text-sm text-brand-2">{car.milage} KM</span>
-                      <span className="line-clamp-1 font-inter font-medium text-sm text-brand-2">{car.year}</span>
-                      <span className="col-span-2 flex justify-center break-words font-lexend font-medium text-base text-gray-100">{car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                    </div>
+        <li className="w-full max-w-[312px] h-[350px] bg-white cursor-pointer" onClick={()=> router.push(`/cardetails/${car.id}`)}>
+            <div className="bg-gray-700 w-full h-40%">
+                <img  src={car.coverPhoto} alt={car.model} className="w-full h-[152px]"/>
+            </div>
+            <div className="flex flex-col gap-4">
+                <h3 className=" text-base font-semibold mt-3">{car.brand}-{car.model}</h3>
+                <p className=" text-sm text-gray-200 break-words line-clamp-2">{car.description}</p>
+                <div className="flex gap-3 items-center">
+                    <span className={randomClass}>{car.user.name.slice(0,2).toUpperCase()}</span>
+                    <p className="text-sm text-gray-200 font-medium">{car.user.name}</p>
                 </div>
+                <div className="flex justify-between">
+                    <div className="flex gap-3">
+                        <span className=" py-1 px-2 bg-brand-4 text-brand-1 border-none text-sm font-medium">{car.milage.toString().slice(0,5)} KM</span>
+                        <span className="py-1 px-2 bg-brand-4 text-brand-1 border-none text-sm font-medium">{car.year}</span>
+                    </div>
+                    <p>{car.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                </div>
+            </div>
         </li>
     )
 }
-
 export default CardCar

@@ -8,7 +8,7 @@ const Filter = () => {
     const {filteredCars, cars} = useContext(carsContext)
 
     return(
-        <aside className="flex flex-col w-28.125 gap-2 p-1">
+        <aside className="hidden lg:flex flex-col w-[20%] gap-2 p-1">
           {/* <h3 className="font-lexend text-base font-medium" >Filtro</h3> */}
           <div className="hidden lg:flex flex-col  gap-4 p-2">
           <div className="grid grid-rows-11">
