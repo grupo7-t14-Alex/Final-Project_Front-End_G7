@@ -8,6 +8,10 @@ import UserInfos from "@/components/infoUser/infoUser";
 import { ProfileMenu } from "@/components/profileMenu";
 import { useContext } from "react";
 import { AuthContext } from "@/context/Auth.Context";
+import { carsContext } from "@/context/Cars.Context";
+import ModalUpCars from "@/components/modal/modalUpCars";
+import ModalUpAddress from "@/components/modal/modalUpAddress";
+import ModalUpUser from "@/components/modal/modalUpUser";
 
 export interface Seller {
   id: string;
@@ -41,7 +45,8 @@ interface Cars {
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
 
-  const { user, findSeller, protectRoutes } = useContext(AuthContext);
+  const { user, findSeller, protectRoutes, openModalUpAddress, openModalUp } = useContext(AuthContext);
+  const { openModalUpCars } = useContext(carsContext);
 
 
   protectRoutes();
@@ -97,6 +102,11 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
         </div>
       </main>
       <Footer />
+      {openModalUpAddress && <ModalUpAddress />}
+      {openModalUp && <ModalUpUser />}
+      {
+        openModalUpCars && <ModalUpCars />
+      }
     </>
   );
 };

@@ -62,7 +62,7 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
       setIsNumberYear(true);
 
       data.milage = Math.round(Number(data.milage));
-      // data.price = Math.round(Number(data.price));
+      data.price = Math.round(Number(data.price));
       data.year = Math.round(Number(data.year));
 
       const gallery = [data.image1, data.image2];
@@ -72,7 +72,6 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
       delete data.image2;
 
       Api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      console.log(data)
       await Api.post(`/cars`, data);
       setOpenModel(false);
       window.location.reload();
@@ -168,10 +167,10 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
                   carInfo && carInfo[0].fuel == 1
                     ? "Flex"
                     : carInfo && carInfo[0].fuel == 2
-                    ? "Híbrido"
-                    : carInfo && carInfo[0].fuel == 3
-                    ? "Elétrico"
-                    : ""
+                      ? "Híbrido"
+                      : carInfo && carInfo[0].fuel == 3
+                        ? "Elétrico"
+                        : ""
                 }
                 readOnly
                 {...register("fuel")}
