@@ -1,21 +1,24 @@
-"use client"
+
 import { Header } from "@/components/header";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
 import { carsContext } from "@/context/Cars.Context";
 import { useRouter } from "next/navigation";
+import { Api } from "@/services/Api";
+import { CarProps } from "@/types";
+import UserDetails from "@/components/UserDetails";
 
 const CarDetails = async ({ params }: { params: { id: string } }) => {
-
-  const {getCarDetails} = useContext(carsContext)
-
-  const router = useRouter()
-  const car = await getCarDetails(params.id)
-  const carDetail = car
+  
+  
+  const {data} = await Api.get<CarProps>(`/cars/${params.id}`)
+  const carDetail = data
+  
   if(!carDetail) {
     return null
   }
+  console.log('rt')
   return (
     <>
             <Header>
@@ -55,25 +58,14 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
               <figcaption className="fig-images">
                 <h1 className=" text-gray-100 text-xl font-semibold">fotos</h1>
                 <ul className="list-cars">
-                  {carDetail.gallery.map((img: any)=> (
+                  {/* {carDetail.gallery.map((img: any)=> (
                     <li key={img} className="car-images">
                       <img src={img} alt="foto de carro" />
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
               </figcaption>
-              <div className="user-card">
-                <div className="user-card-2">
-                  <span className="user-img-profile">SL</span>
-                  <h2 className="text-xl text-gray-100 font-semibold">
-                    {carDetail.user.name}
-                  </h2>
-                  <p className="text-gray-200 text-base">
-                    {carDetail.user.description}
-                  </p>
-                  <button className="btn-user" onClick={()=> router.push(`/seller/${carDetail.userId}`)}>Ver todos anuncios</button>
-                </div>
-              </div>
+              <UserDetails name={carDetail.user.name} description={carDetail.user.description} id={carDetail.userId}/>
             </section>
           </div>
           <div className="box-coments">
