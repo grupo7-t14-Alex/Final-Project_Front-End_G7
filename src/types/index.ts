@@ -1,5 +1,5 @@
 
-interface UserCarProps {
+export interface UserCarProps {
     name: string;
     description?: string;
 }

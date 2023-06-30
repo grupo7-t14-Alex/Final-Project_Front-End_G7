@@ -1,3 +1,4 @@
+
 "use client"
 
 import { Header } from "@/components/header";
@@ -32,7 +33,6 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
     return null
   }
   
- 
   return (
     <>
       <Header>
@@ -90,11 +90,13 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
               <figcaption className="fig-images">
                 <h1 className=" text-gray-100 text-xl font-semibold">fotos</h1>
                 <ul className="list-cars">
+
                   {CarDetails.gallery.map((img: any)=> (
+
                     <li key={img} className="car-images">
                       <img src={img} alt="foto de carro" />
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
               </figcaption>
               <div className="user-card">
