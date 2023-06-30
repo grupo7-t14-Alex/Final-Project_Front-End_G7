@@ -72,6 +72,6 @@
     @apply w-[90%] max-w-[1240px] bg-white   h-auto rounded p-5 flex flex-col gap-6 mt-5;
   }
   .profile-menu {
-    @apply p-3 bg-gray-1000 rounded absolute w-40 h-max top-16 -left-10 hidden group-hover:block;
+    @apply p-3 bg-gray-1000 rounded absolute w-40 h-max top-8 -left-10 hidden group-hover:block;
   }
 }

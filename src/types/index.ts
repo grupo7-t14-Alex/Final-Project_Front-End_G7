@@ -21,3 +21,16 @@ export interface CarProps {
     userId: string;
     user: UserCarProps
 }
+
+interface UserCommentsProps {
+    name: string;
+}
+
+export interface CommentsData {
+    id: string;
+    createdAt: string;
+    description: string;
+    userId: string;
+    carId: string;
+    user: UserCommentsProps;
+}

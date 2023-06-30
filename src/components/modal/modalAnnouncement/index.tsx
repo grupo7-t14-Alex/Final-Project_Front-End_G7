@@ -116,6 +116,7 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
         <div className="flex flex-col gap-6">
           <div>
             <select
+              className="w-full py-[16px] px-[10px] text-[#868E96] rounded border-[1.5px] border-[#E9ECEF] focus:outline-none focus:border-[#5126EA]"
               {...register("brand")}
               onChange={(event) => selectBrand(event)}
             >
@@ -128,6 +129,7 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
           </div>
           <div>
             <select
+              className="w-full py-[16px] px-[10px] text-[#868E96] rounded border-[1.5px] border-[#E9ECEF] focus:outline-none focus:border-[#5126EA]"
               {...register("model")}
               onChange={(event) => selectModel(event)}
             >

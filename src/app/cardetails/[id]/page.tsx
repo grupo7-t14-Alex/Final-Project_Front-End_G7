@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import { carsContext } from "@/context/Cars.Context";
 import { useRouter } from "next/navigation";
+
 import { Api } from "@/services/Api";
 import { CarProps } from "@/types";
 import UserDetails from "@/components/UserDetails";
@@ -18,15 +19,32 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
   if(!carDetail) {
     return null
   }
-  console.log('rt')
+
   return (
     <>
-            <Header>
-                <Link href={'/login'} className='text-[#4529E6] text-center font-bold hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
-                <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-[#ADB5BD] inline-block px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
-            </Header>
+      <Header>
+        {!token ?
+          <>
+            <Link href={'/login'} className='text-gray-200   hover:text-[#5126EA] hover:scale-105 mr-12'>Fazer Login</Link>
+            <Link href={'/register'}   className='bg-transparent hover:scale-105 font-bold border border-gray-400 text-center px-4 py-2 rounded hover:bg-[#ADB5BD] hover:text-white hover:border-transparent'>Cadastrar</Link>
+          </>
+        :
+          <div className="group w-full h-full flex items-center gap-2 relative">
+            <div className="w-8 h-8 rounded-full bg-brand-1 flex items-center justify-center ">
+              <h4 className="text-white font-bold text-sm">
+                {currentUser.name ? currentUser.name.match(/\b(\w)/gi) : null}
+              </h4>
+            </div>
+            <h2 className="font-medium text-sm">{currentUser.name}</h2>
+            <ProfileMenu user={currentUser} />
+          </div>
+        }
+      </Header>
+
       <main className="gradient w-full h-full">
+
         <div className="w-[90%] mx-auto">
+
           <div className="flex flex-col md:flex-row w-full">
             <section className="md:w-[60%]">
               <figcaption className="fig-image">
@@ -68,65 +86,19 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
               <UserDetails name={carDetail.user.name} description={carDetail.user.description} id={carDetail.userId}/>
             </section>
           </div>
-          <div className="box-coments">
+
+          <ul className="box-coments">
             <h1 className="text-gray-100 text-xl font-semibold">Comentários</h1>
-            <div className="box-coments-2">
-              <div className="flex gap-3 items-center">
-                <span className="img-user-coment">JL</span>
-                <h4 className="text-gray-100 text-sm font-medium">
-                  Júlia Lima
-                </h4>
-                <span className="text-gray-300 text-xs">há 3 dias</span>
-              </div>
-              <p className="text-gray-200 text-sm mt-3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industr standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book.
-              </p>
-            </div>
-            <div className=" w-full max-w-[663px] h-52 gap-5 mt-4">
-              <div className="flex gap-3 items-center">
-                <span className=" w-8 h-8 bg-random-4 text-center text-white text-sm rounded-full flex justify-center items-center">
-                  MA
-                </span>
-                <h4 className=" text-gray-100 text-sm font-medium">
-                  Marcos Antônio
-                </h4>
-                <span className="text-gray-300 text-xs">há 3 dias</span>
-              </div>
-              <p className="text-gray-200 text-sm mt-3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industrys standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book.
-              </p>
-            </div>
-            <div className=" w-full max-w-[663px] h-52 gap-5 mt-4">
-              <div className="flex gap-3 items-center">
-                <span className=" w-8 h-8 bg-random-9 text-center text-white text-sm rounded-full flex justify-center items-center">
-                  CS
-                </span>
-                <h4 className=" text-gray-100 text-sm font-medium">
-                  Camila Silva
-                </h4>
-                <span className="text-gray-300 text-xs">há 3 dias</span>
-              </div>
-              <p className="text-gray-200 text-sm mt-3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industrys standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book.
-              </p>
-            </div>
-          </div>
+            {comments!.map((comments) => {
+              return <CommentCard key={comments.id} comment={comments} />;
+            })}
+          </ul>
+
           <div className="box-textarea">
             <div className="flex flex-col gap-4">
               <div className="flex gap-3 items-center">
                 <span className="img-user-coment">SL</span>
-                <h4 className=" text-gray-100 text-sm font-medium">
-                  Samuel Leão
-                </h4>
+                <h4 className=" text-gray-100 text-sm font-medium">Samuel Leão</h4>
               </div>
               <textarea rows={4} color="50" className="textarea" defaultValue={"Carro muito confortável, foi uma ótima experiência de compra..."}>
               </textarea>
@@ -140,8 +112,11 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
               </span>
             </div>
           </div>
+
         </div>
+
       </main>
+      
     </>
   );
 };
