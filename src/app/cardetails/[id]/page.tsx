@@ -1,7 +1,7 @@
 "use client";
 
 import { Header } from "@/components/header";
-import Link from "next/link";
+
 import { useContext, useEffect } from "react";
 import { carsContext } from "@/context/Cars.Context";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import { Seller } from "@/app/seller/[id]/page";
 import { CommentSchema, commentSchema } from "@/schema/createComment.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 const CarDetails = ({ params }: { params: { id: string } }) => {
   const { token, user, createComment } = useContext(AuthContext);
@@ -144,12 +145,13 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
             })}
           </ul>
 
+          {token ?
           <form className="box-textarea" onSubmit={handleSubmit(submit)}>
             <div className="flex flex-col gap-4">
               <div className="flex gap-3 items-center">
                 <span className="img-user-coment">SL</span>
                 <h4 className=" text-gray-100 text-sm font-medium">
-                  Samuel Leão
+                {CarDetails.user.name}
                 </h4>
               </div>
               <textarea
@@ -157,7 +159,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
                 rows={4}
                 color="50"
                 className="textarea"
-                defaultValue={
+                placeholder={
                   "Carro muito confortável, foi uma ótima experiência de compra..."
                 }
               ></textarea>
@@ -173,6 +175,14 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
               </span>
             </div>
           </form>
+          :
+          <>
+            <h1>faça o loguin para deixar um comentário</h1>
+            <Link href={"/login"} className="text-gray-200 hover:text-[#5126EA] hover:scale-105 mr-12">Fazer Login</Link>
+          </>
+          }
+
+
         </div>
       </main>
     </>
