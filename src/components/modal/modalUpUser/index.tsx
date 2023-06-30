@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import ModalDeleteUser from '../modalDelUser';
 
 const ModalUpUser = () => {
+    
     const { token, user, openModalUp, setOpenModalUp, openModalDelUser, setOpenModalDelUser } = useContext(AuthContext);
 
     const userId: string = user.id

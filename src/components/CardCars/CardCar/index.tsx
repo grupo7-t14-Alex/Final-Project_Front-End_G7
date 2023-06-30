@@ -1,3 +1,4 @@
+'use client'
 import { CarProps } from "@/types"
 import { useRouter } from "next/navigation"
 interface Car{
