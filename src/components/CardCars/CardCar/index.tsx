@@ -1,16 +1,22 @@
 'use client'
 import { CarProps } from "@/types"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 interface Car{
     car: CarProps
 }
 const CardCar = ({car}:Car) => {
+    
     const numeroAleatorio = Math.floor(Math.random() * 10) + 1
+    
     const num = `bg-${numeroAleatorio}`
+    
     const randomClass = `p-1 rounded-full text-white text-center bg-random-7`
+
     const router = useRouter()
+
     return (
-        <li className="w-full max-w-[312px] h-[350px] bg-white cursor-pointer" onClick={()=> router.push(`/cardetails/${car.id}`)}>
+        <li className="w-full max-w-[312px] h-[350px] bg-white cursor-pointer" onClick={() => router.push(`/cardetails/${car.id}`)}>
             <div className="bg-gray-700 w-full h-40%">
                 <img  src={car.coverPhoto} alt={car.model} className="w-full h-[152px]"/>
             </div>

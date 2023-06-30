@@ -1,32 +1,37 @@
 "use client"
+
 import { Header } from "@/components/header";
-import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { carsContext } from "@/context/Cars.Context";
 import { useRouter } from "next/navigation";
 import { ProfileMenu } from "@/components/profileMenu";
 import { AuthContext } from "@/context/Auth.Context";
-import { Seller } from "@/app/seller/[id]/page";
 import { CommentCard } from "@/components/cards/CommentsCard";
+import { Seller } from "@/app/seller/[id]/page";
 
-const CarDetails = async ({ params }: { params: { id: string } }) => {
 
-  const {getCarDetails, getComments} = useContext(carsContext)
+const CarDetails = ({ params }: { params: { id: string } }) => {
 
   const { token, user } = useContext(AuthContext)
-  const currentUser: Seller = user;
+  const userData: Seller = user
 
-  const comments = await getComments(params.id);
+  const { getCarDetails, CarDetails } = useContext(carsContext)
+
+  useEffect(() => {
+    const fetchCarDetails = async () => {
+      await getCarDetails(params.id);
+    };
+    fetchCarDetails();
+
+  }, [getCarDetails, params.id]);
 
   const router = useRouter()
-
-  const car = await getCarDetails(params.id)
-  const carDetail = car
-
-  if(!carDetail) {
+  
+  if(!CarDetails) {
     return null
   }
+  
  
   return (
     <>
@@ -40,11 +45,11 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
           <div className="group w-full h-full flex items-center gap-2 relative">
             <div className="w-8 h-8 rounded-full bg-brand-1 flex items-center justify-center ">
               <h4 className="text-white font-bold text-sm">
-                {currentUser.name ? currentUser.name.match(/\b(\w)/gi) : null}
+                {userData.name ? userData.name.match(/\b(\w)/gi) : null}
               </h4>
             </div>
-            <h2 className="font-medium text-sm">{currentUser.name}</h2>
-            <ProfileMenu user={currentUser} />
+            <h2 className="font-medium text-sm">{userData.name}</h2>
+            <ProfileMenu user={userData} />
           </div>
         }
       </Header>
@@ -56,18 +61,18 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
           <div className="flex flex-col md:flex-row w-full">
             <section className="md:w-[60%]">
               <figcaption className="fig-image">
-                <img src={carDetail.coverPhoto} alt="carro" />
+                <img src={CarDetails.coverPhoto} alt="carro" />
               </figcaption>
               <div className="car-info">
                 <h1 className=" text-xl font-semibold ">
-                  {carDetail.brand} - {carDetail.model}
+                  {CarDetails.brand} - {CarDetails.model}
                 </h1>
                 <div className="car-info-2">
                   <div className="flex gap-3 ">
-                    <span className="car-span">{carDetail.year}</span>
-                    <span className="car-span">{carDetail.milage} KM</span>
+                    <span className="car-span">{CarDetails.year}</span>
+                    <span className="car-span">{CarDetails.milage} KM</span>
                   </div>
-                  <p className="text-base font-semibold">{carDetail.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                  <p className="text-base font-semibold">{CarDetails.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>
                 <button className="button-buy">Comprar</button>
               </div>
@@ -76,15 +81,16 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
                   Descrição
                 </h1>
                 <p className="text-gray-200 text-base">
-                 {carDetail.description}
+                 {CarDetails.description}
                 </p>
               </div>
             </section>
+
             <section className="md:w-[40%]">
               <figcaption className="fig-images">
                 <h1 className=" text-gray-100 text-xl font-semibold">fotos</h1>
                 <ul className="list-cars">
-                  {carDetail.gallery.map((img: any)=> (
+                  {CarDetails.gallery.map((img: any)=> (
                     <li key={img} className="car-images">
                       <img src={img} alt="foto de carro" />
                     </li>
@@ -95,21 +101,22 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
                 <div className="user-card-2">
                   <span className="user-img-profile">SL</span>
                   <h2 className="text-xl text-gray-100 font-semibold">
-                    {carDetail.user.name}
+                    {CarDetails.user.name}
                   </h2>
                   <p className="text-gray-200 text-base">
-                    {carDetail.user.description}
+                    {CarDetails.user.description}
                   </p>
-                  <button className="btn-user" onClick={()=> router.push(`/seller/${carDetail.userId}`)}>Ver todos anuncios</button>
+                  <button className="btn-user" onClick={()=> router.push(`/seller/${CarDetails.userId}`)}>Ver todos anuncios</button>
                 </div>
               </div>
             </section>
+
           </div>
 
           <ul className="box-coments">
             <h1 className="text-gray-100 text-xl font-semibold">Comentários</h1>
-            {comments!.map((comments) => {
-              return <CommentCard key={comments.id} comment={comments} />;
+            {CarDetails.commentaries.map((comments: any, index: any) => {
+              return <CommentCard key={index} comment={comments} />;
             })}
           </ul>
 
@@ -139,4 +146,5 @@ const CarDetails = async ({ params }: { params: { id: string } }) => {
     </>
   );
 };
+
 export default CarDetails;
