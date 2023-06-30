@@ -2,8 +2,12 @@
 import { useContext, useEffect } from "react"
 import CardCar from "./CardCar"
 import { carsContext } from "@/context/Cars.Context"
+
+
 const CardCars = () => {
+  
     const {cars, setLop, lop, hiddenFilter, setHiddenFilter} = useContext(carsContext)
+    
     useEffect(()=>{
     },[cars])
     return(
@@ -17,4 +21,5 @@ const CardCars = () => {
        </>
     )
 }
+
 export default CardCars

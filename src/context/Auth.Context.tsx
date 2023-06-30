@@ -39,6 +39,7 @@ interface iProviderValue {
   setOpenModalUpAddress: React.Dispatch<React.SetStateAction<boolean>>;
   openModalDelUser: boolean;
   setOpenModalDelUser: React.Dispatch<React.SetStateAction<boolean>>;
+  createComment: (data: any, id: string) => Promise<void>;
 }
 
 export const AuthProvider = ({
@@ -126,13 +127,13 @@ export const AuthProvider = ({
       try {
         const response = await Api.get(`/users/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         setUser(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
 
@@ -144,8 +145,8 @@ export const AuthProvider = ({
   const findSeller = async (id: string) => {
     const response = await Api.get(`/users/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     const seller = response.data;
     return seller;
@@ -162,6 +163,20 @@ export const AuthProvider = ({
       .catch((err) => {
         console.log(err);
         toast.error("Verifique se o email esta correto!");
+      });
+  };
+
+  const createComment = async (data: any, id: string) => {
+    await Api.post(`commentaries/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(() => {
+        router.refresh();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -182,6 +197,7 @@ export const AuthProvider = ({
   return (
     <AuthContext.Provider
       value={{
+        createComment,
         token,
         resetPassword,
         sendEmail,
@@ -196,7 +212,7 @@ export const AuthProvider = ({
         openModalUpAddress,
         setOpenModalUpAddress,
         openModalDelUser,
-        setOpenModalDelUser
+        setOpenModalDelUser,
       }}
     >
       {children}

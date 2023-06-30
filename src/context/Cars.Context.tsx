@@ -1,6 +1,6 @@
 "use client"
 import { Api } from "@/services/Api";
-import { CarProps } from "@/types";
+import { CarProps, CommentsData } from "@/types";
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
 import { number } from "zod";
 
@@ -8,6 +8,7 @@ interface ChildrenProps {
     children: ReactNode;
 }
 interface CarsContextProps {
+    CarDetails: any,
     cars: CarProps[]
     filteredCars: (filter: string, key: string) => void
     setLop: (lop: boolean) => void
@@ -22,9 +23,9 @@ interface CarsContextProps {
     setOpenModalDelCars: React.Dispatch<React.SetStateAction<boolean>>;
     carId: string | undefined
     setCarId: Dispatch<SetStateAction<string | undefined>>
-    getCarDetails: (id: string) => Promise<CarProps | undefined>
-
+    getCarDetails: (id: string) => Promise<void>
 }
+
 export const carsContext = createContext({} as CarsContextProps)
 
 export const CarsProvider = ({ children }: ChildrenProps) => {
@@ -37,6 +38,8 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
     const [openModalUpCars, setOpenModalUpCars] = useState<boolean>(false);
     const [openModalDelCars, setOpenModalDelCars] = useState<boolean>(false);
     const [carId, setCarId] = useState<string>();
+
+
     useEffect(() => {
         const getCars = async () => {
             try {
@@ -48,6 +51,8 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
         }
         getCars()
     },[lop])
+
+    
     const filteredCars = (filter: string , key: string) => {
         const filteredCar = cars.filter((car) =>{
             if(key === 'year') {
@@ -86,18 +91,31 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             setCars(filteredCar)
         }
     }
+
+    const [CarDetails, setCarDetails] = useState<any>()
     const getCarDetails = async (id: string) =>{
         try {
             const { data } = await Api.get<CarProps>(`/cars/${id}`)
-            return data
+            setCarDetails(data)
         } catch (error) {
             console.log(error)
         }
     }
+
     return(
-        <carsContext.Provider value={{cars, filteredCars, setLop, lop,
-          filterModal, setFilterModal, hiddenFilter, setHiddenFilter, getCarDetails, openModalUpCars,
-          setOpenModalUpCars, carId, setCarId, openModalDelCars,  setOpenModalDelCars,}}>
+        <carsContext.Provider value={{
+            CarDetails,
+            cars,
+            filteredCars,
+            setLop,
+            lop,
+            setOpenModalUpCars,
+            carId,
+            setCarId,
+            openModalDelCars,
+            setOpenModalDelCars,
+            filterModal, setFilterModal, hiddenFilter, setHiddenFilter, getCarDetails, openModalUpCars,
+            }}>
 
             {children}
         </carsContext.Provider>
