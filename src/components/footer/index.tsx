@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const Footer = () => {
     return (
-        <footer className="flex justify-between items-center px-[60px] py-[56.83px] bg-[#0B0D0D]">
+        <footer className="flex justify-between flex-col lg:flex-row gap-4 items-center w-full h-[136px] p-4  bg-[#0B0D0D]">
             <figure>
                 <Image
                     src="/assets/MotorShopFooter.png"

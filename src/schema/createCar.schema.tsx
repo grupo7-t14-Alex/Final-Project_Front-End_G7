@@ -31,5 +31,21 @@ export const createCarSchema = z
         published: z.boolean().default(true),
     })
     .catchall(z.unknown());
+export const updateCarSchema = z
+    .object({
+        color: z.string().min(1, "Campo obrigatório"),
+        milage: z.string().min(1, "Campo obrigatório").or(z.number()),
+        price: z.string().min(1, "Campo obrigatório").or(z.number()),
+        description: z.string().min(1, "Campo obrigatório"),
+        coverPhoto: z.string().min(1, "Campo obrigatório"),
+        image1: z.string().optional(),
+        image2: z.string().optional(),
+        gallery: z
+            .union([z.string(), z.array(z.string().nullish())])
+            .optional(),
+        published: z.boolean().default(true),
+    })
+    .catchall(z.unknown());
 
+export type updateCarSchemaType = z.infer<typeof updateCarSchema>;
 export type createCarSchemaType = z.infer<typeof createCarSchema>;
