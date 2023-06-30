@@ -1,6 +1,6 @@
 "use client"
 import { Api } from "@/services/Api";
-import { CarProps } from "@/types";
+import { CarProps, CommentsData } from "@/types";
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
 import { number } from "zod";
 
@@ -23,6 +23,7 @@ interface CarsContextProps {
     carId: string | undefined
     setCarId: Dispatch<SetStateAction<string | undefined>>
     getCarDetails: (id: string) => Promise<CarProps | undefined>
+    getComments: (id: string) => Promise<CommentsData[] | undefined>
 
 }
 export const carsContext = createContext({} as CarsContextProps)
@@ -37,6 +38,8 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
     const [openModalUpCars, setOpenModalUpCars] = useState<boolean>(false);
     const [openModalDelCars, setOpenModalDelCars] = useState<boolean>(false);
     const [carId, setCarId] = useState<string>();
+
+
     useEffect(() => {
         const getCars = async () => {
             try {
@@ -48,6 +51,8 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
         }
         getCars()
     },[lop])
+
+    
     const filteredCars = (filter: string , key: string) => {
         const filteredCar = cars.filter((car) =>{
             if(key === 'year') {
@@ -86,6 +91,7 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             setCars(filteredCar)
         }
     }
+
     const getCarDetails = async (id: string) =>{
         try {
             const { data } = await Api.get<CarProps>(`/cars/${id}`)
@@ -94,10 +100,20 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             console.log(error)
         }
     }
+
+    const getComments = async (id: string) => {
+        try {
+          const { data } = await Api.get<CommentsData[]>(`/commentaries/car/${id}`);
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+    };
+
     return(
         <carsContext.Provider value={{cars, filteredCars, setLop, lop,
           filterModal, setFilterModal, hiddenFilter, setHiddenFilter, getCarDetails, openModalUpCars,
-          setOpenModalUpCars, carId, setCarId, openModalDelCars,  setOpenModalDelCars,}}>
+          setOpenModalUpCars, carId, setCarId, openModalDelCars,  setOpenModalDelCars, getComments}}>
 
             {children}
         </carsContext.Provider>

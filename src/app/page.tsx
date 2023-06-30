@@ -12,10 +12,18 @@ import { ProfileMenu } from '@/components/profileMenu';
 import homeCar from '@/img/homeCar.png'
 import homeCarLg from '@/img/Photo.png'
 import Image from 'next/image';
+import ModalUpUser from '@/components/modal/modalUpUser';
+import ModalUpAddress from '@/components/modal/modalUpAddress';
+
+
 export default function Home() {
+
   const {filterModal, setFilterModal } = useContext(carsContext)
-  const { token, user } = useContext(AuthContext)
+
+  const { token, user, openModalUp, openModalUpAddress } = useContext(AuthContext)
+
   const currentUser: Seller = user;
+
   return (
     <>
       <Header>
@@ -70,6 +78,8 @@ export default function Home() {
         </section>
       </main>
       {filterModal && <ModalFilter/>}
+      {openModalUp && <ModalUpUser/>}
+      {openModalUpAddress && <ModalUpAddress/>}
     </>
   )
 }
