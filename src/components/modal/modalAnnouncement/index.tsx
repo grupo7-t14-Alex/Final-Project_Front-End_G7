@@ -62,7 +62,6 @@ export const ModalAnnouncement = ({ sellerId }: any) => {
       setIsNumberYear(true);
 
       data.milage = Math.round(Number(data.milage));
-      data.price = Math.round(Number(data.price));
       data.year = Math.round(Number(data.year));
 
       const gallery = [data.image1, data.image2];
