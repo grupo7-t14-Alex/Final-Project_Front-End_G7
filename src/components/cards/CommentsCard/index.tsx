@@ -1,4 +1,8 @@
+'use client'
+import { AuthContext } from "@/context/Auth.Context";
+import { Api } from "@/services/Api";
 import { CommentsData } from "@/types";
+import { useContext, useEffect, useState } from "react";
 
 interface CommentCardProps {
   comment: CommentsData;
