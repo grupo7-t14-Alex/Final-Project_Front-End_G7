@@ -36,7 +36,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
   const submit = (data: any) => {
     createComment(data, params.id);
   };
-
+  
   if (!CarDetails) {
     return null;
   }
@@ -89,7 +89,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
                     <span className="car-span">{CarDetails.milage} KM</span>
                   </div>
                   <p className="text-base font-semibold">
-                    {CarDetails.price.toLocaleString("pt-BR", {
+                   {CarDetails.price.toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",
                     })}
