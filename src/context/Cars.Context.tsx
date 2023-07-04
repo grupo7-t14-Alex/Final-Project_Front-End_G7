@@ -22,6 +22,10 @@ interface CarsContextProps {
     setOpenModalUpCars: React.Dispatch<React.SetStateAction<boolean>>;
     openModalDelCars: boolean
     setOpenModalDelCars: React.Dispatch<React.SetStateAction<boolean>>;
+    openModalUpComments: boolean
+    setOpenModalUpComments: React.Dispatch<React.SetStateAction<boolean>>;
+    commentId: string[]
+    setCommentId: Dispatch<SetStateAction<string[]>>
     carId: string | undefined
     setCarId: Dispatch<SetStateAction<string | undefined>>
     getCarDetails: (id: string) => Promise<void>
@@ -40,6 +44,8 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
     const [hiddenFilter, setHiddenFilter] = useState(false)
     const [openModalUpCars, setOpenModalUpCars] = useState<boolean>(false);
     const [openModalDelCars, setOpenModalDelCars] = useState<boolean>(false);
+    const [openModalUpComments, setOpenModalUpComments] = useState<boolean>(false);
+    const [commentId, setCommentId] = useState<string[]>([]);
     const [carId, setCarId] = useState<string>();
 
 
@@ -53,12 +59,12 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             }
         }
         getCars()
-    },[lop])
+    }, [lop])
 
-    
-    const filteredCars = (filter: string , key: string) => {
-        const filteredCar = cars.filter((car) =>{
-            if(key === 'year') {
+
+    const filteredCars = (filter: string, key: string) => {
+        const filteredCar = cars.filter((car) => {
+            if (key === 'year') {
                 return car.year === parseInt(filter)
             }
             if (key === 'brand') {
@@ -71,7 +77,7 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
                 return car.color == filter
             }
 
-            if(key === 'fuel') {
+            if (key === 'fuel') {
 
                 return car.fuel == filter
             }
@@ -89,14 +95,14 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             }
         })
 
-        if(filteredCar.length >= 1){
+        if (filteredCar.length >= 1) {
             setHiddenFilter(true)
             setCars(filteredCar)
         }
     }
 
     const [CarDetails, setCarDetails] = useState<any>()
-    const getCarDetails = async (id: string) =>{
+    const getCarDetails = async (id: string) => {
         try {
             const { data } = await Api.get<CarProps>(`/cars/${id}`)
             setCarDetails(data)
@@ -105,10 +111,10 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
         }
     }
 
-    const deleteComment = async (id: string) =>{
+    const deleteComment = async (id: string) => {
         try {
             await Api.delete(`/commentaries/${id}`, {
-                headers:{
+                headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
@@ -117,7 +123,7 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
         }
     }
 
-    return(
+    return (
         <carsContext.Provider value={{
             CarDetails,
             cars,
@@ -129,14 +135,18 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             setCarId,
             openModalDelCars,
             setOpenModalDelCars,
-            filterModal, 
-            setFilterModal, 
-            hiddenFilter, 
-            setHiddenFilter, 
-            getCarDetails, 
+            filterModal,
+            setFilterModal,
+            hiddenFilter,
+            setHiddenFilter,
+            getCarDetails,
             openModalUpCars,
-            deleteComment
-            }}>
+            deleteComment,
+            openModalUpComments,
+            setOpenModalUpComments,
+            commentId,
+            setCommentId
+        }}>
 
             {children}
         </carsContext.Provider>

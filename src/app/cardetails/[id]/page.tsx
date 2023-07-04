@@ -13,12 +13,13 @@ import { CommentSchema, commentSchema } from "@/schema/createComment.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import ModalUpComent from "@/components/modal/modalUpComent";
 
 const CarDetails = ({ params }: { params: { id: string } }) => {
   const { token, user, createComment } = useContext(AuthContext);
   const userData: Seller = user;
 
-  const { getCarDetails, CarDetails } = useContext(carsContext);
+  const { getCarDetails, CarDetails, openModalUpComments } = useContext(carsContext);
 
   useEffect(() => {
     const fetchCarDetails = async () => {
@@ -36,7 +37,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
   const submit = (data: any) => {
     createComment(data, params.id);
   };
-  
+
   if (!CarDetails) {
     return null;
   }
@@ -89,7 +90,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
                     <span className="car-span">{CarDetails.milage} KM</span>
                   </div>
                   <p className="text-base font-semibold">
-                   {CarDetails.price.toLocaleString("pt-BR", {
+                    {CarDetails.price.toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",
                     })}
@@ -146,45 +147,48 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
           </ul>
 
           {token ?
-          <form className="box-textarea" onSubmit={handleSubmit(submit)}>
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-3 items-center">
-                <span className="img-user-coment">SL</span>
-                <h4 className=" text-gray-100 text-sm font-medium">
-                {CarDetails.user.name}
-                </h4>
+            <form className="box-textarea" onSubmit={handleSubmit(submit)}>
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-3 items-center">
+                  <span className="img-user-coment">SL</span>
+                  <h4 className=" text-gray-100 text-sm font-medium">
+                    {CarDetails.user.name}
+                  </h4>
+                </div>
+                <textarea
+                  {...register("description")}
+                  rows={4}
+                  color="50"
+                  className="textarea"
+                  placeholder={
+                    "Carro muito confortável, foi uma ótima experiência de compra..."
+                  }
+                ></textarea>
+                <button className="btn-coments" type="submit">
+                  Comentar
+                </button>
+                <div className="flex gap-2">
+                  <span className="span-textarea">Gostei muito!</span>
+                  <span className="span-textarea">Incrivel</span>
+                </div>
+                <span className="span-textarea max-w-[200px]">
+                  Recomendarei para mes amigos!
+                </span>
               </div>
-              <textarea
-                {...register("description")}
-                rows={4}
-                color="50"
-                className="textarea"
-                placeholder={
-                  "Carro muito confortável, foi uma ótima experiência de compra..."
-                }
-              ></textarea>
-              <button className="btn-coments" type="submit">
-                Comentar
-              </button>
-              <div className="flex gap-2">
-                <span className="span-textarea">Gostei muito!</span>
-                <span className="span-textarea">Incrivel</span>
-              </div>
-              <span className="span-textarea max-w-[200px]">
-                Recomendarei para mes amigos!
-              </span>
-            </div>
-          </form>
-          :
-          <>
-            <h1>faça o loguin para deixar um comentário</h1>
-            <Link href={"/login"} className="text-gray-200 hover:text-[#5126EA] hover:scale-105 mr-12">Fazer Login</Link>
-          </>
+            </form>
+            :
+            <>
+              <h1>faça o loguin para deixar um comentário</h1>
+              <Link href={"/login"} className="text-gray-200 hover:text-[#5126EA] hover:scale-105 mr-12">Fazer Login</Link>
+            </>
           }
 
 
         </div>
       </main>
+      {
+        openModalUpComments && <ModalUpComent />
+      }
     </>
   );
 };
