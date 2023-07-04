@@ -1,6 +1,7 @@
 "use client"
 import { Api } from "@/services/Api";
 import { CarProps, CommentsData } from "@/types";
+import { parseCookies } from "nookies";
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
 import { number } from "zod";
 
@@ -24,13 +25,15 @@ interface CarsContextProps {
     carId: string | undefined
     setCarId: Dispatch<SetStateAction<string | undefined>>
     getCarDetails: (id: string) => Promise<void>
+    deleteComment: (id: string) => Promise<void>
 }
 
 export const carsContext = createContext({} as CarsContextProps)
 
 export const CarsProvider = ({ children }: ChildrenProps) => {
     const [cars, setCars] = useState<CarProps[]>([])
-
+    const cookies = parseCookies()
+    const token = cookies["@token"];
 
     const [lop, setLop] = useState(false)
     const [filterModal, setFilterModal] = useState(false)
@@ -102,6 +105,18 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
         }
     }
 
+    const deleteComment = async (id: string) =>{
+        try {
+            await Api.delete(`/commentaries/${id}`, {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <carsContext.Provider value={{
             CarDetails,
@@ -114,7 +129,13 @@ export const CarsProvider = ({ children }: ChildrenProps) => {
             setCarId,
             openModalDelCars,
             setOpenModalDelCars,
-            filterModal, setFilterModal, hiddenFilter, setHiddenFilter, getCarDetails, openModalUpCars,
+            filterModal, 
+            setFilterModal, 
+            hiddenFilter, 
+            setHiddenFilter, 
+            getCarDetails, 
+            openModalUpCars,
+            deleteComment
             }}>
 
             {children}
