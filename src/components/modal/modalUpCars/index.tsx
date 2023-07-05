@@ -33,7 +33,7 @@ const ModalUpCars = () => {
     })
 
     const [isNumberMilageUp, setIsNumberMilageUp] = useState(true);
-    const [isNumberPriceUp, setIsNumberPriceUp] = useState(true);
+    const [isNumberYear, setIsNumberYear] = useState(true);
 
     const [activeButton, setActiveButton] = useState<boolean>(currentCar.published);
 
@@ -42,24 +42,25 @@ const ModalUpCars = () => {
     };
 
     const onSubmit = async (data: updateCarSchemaType) => {
+        console.log(data)
         if (isNaN(Number(data.milage))) {
             setIsNumberMilageUp(false);
         }
 
-        if (isNaN(Number(data.price))) {
-            setIsNumberPriceUp(false);
+        if (isNaN(Number(data.year))) {
+            setIsNumberYear(false);
         }
 
         if (
             !isNaN(Number(data.milage)) &&
-            !isNaN(Number(data.price))
+            !isNaN(Number(data.year))
         ) {
             try {
                 setIsNumberMilageUp(true);
-                setIsNumberPriceUp(true);
+                setIsNumberYear(true);
 
                 data.milage = Math.round(Number(data.milage));
-                data.price = Math.round(Number(data.price));
+                data.year = Math.round(Number(data.year));
 
                 const gallery = [data.image1, data.image2];
                 data.gallery = gallery;
@@ -102,11 +103,11 @@ const ModalUpCars = () => {
                     Informações Do Veiculo
                 </p>
                 <div className="flex flex-col gap-6">
-                    <label id='name' className='mb-2 text-black font-medium text-[14px] leading-[17px]'>Marca</label>
-                    <Input type='text' value={currentCar.model} readOnly />
+                    <label id='model' className='mb-2 text-black font-medium text-[14px] leading-[17px]'>Marca</label>
+                    <Input type='text' value={currentCar.model} {...register("model")} readOnly />
 
-                    <label id='email' className='mb-2 mt-8 text-black font-medium text-[14px] leading-[17px]'>Modelo</label>
-                    <Input type='email' value={currentCar.brand} readOnly />
+                    <label id='brand' className='mb-2 mt-8 text-black font-medium text-[14px] leading-[17px]'>Modelo</label>
+                    <Input type='text' value={currentCar.brand} {...register("brand")} readOnly />
 
                     <div className="w-full flex gap-3.5">
                         <div className="max-w-[50%]">
@@ -114,6 +115,7 @@ const ModalUpCars = () => {
                                 type="text"
                                 label="Ano"
                                 value={currentCar.year}
+                                {...register("year")}
                                 readOnly
                             />
                         </div>
@@ -122,6 +124,7 @@ const ModalUpCars = () => {
                                 type="text"
                                 label="Combustível"
                                 value={currentCar.fuel}
+                                {...register("fuel")}
                                 readOnly
                             />
                         </div>
@@ -170,6 +173,7 @@ const ModalUpCars = () => {
                                         currency: "BRL",
                                     })
                                 }
+                                {...register("fipeTable")}
                                 readOnly
                             />
                         </div>
@@ -184,9 +188,6 @@ const ModalUpCars = () => {
                                 <p className="text-[14px] text-red-500">
                                     {errors.price.message}
                                 </p>
-                            )}
-                            {!isNumberPriceUp && (
-                                <p className="text-[14px] text-red-500">Preencha um número</p>
                             )}
                         </div>
                     </div>
