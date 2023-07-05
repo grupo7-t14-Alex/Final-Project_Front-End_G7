@@ -5,14 +5,15 @@ import { Api } from "@/services/Api";
 import { CommentsData } from "@/types";
 import { parseCookies } from "nookies";
 import { useContext, useEffect, useState } from "react";
-import {BsTrash} from "react-icons/bs"
+import { BsTrash } from "react-icons/bs"
+import { MdOutlineUpdate } from "react-icons/md"
 interface CommentCardProps {
   comment: CommentsData;
 }
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
-  const [open , setOpen] = useState(false)
-  const {deleteComment} = useContext(carsContext)
+  const [open, setOpen] = useState(false)
+  const { deleteComment, openModalUpComments, setOpenModalUpComments, setCommentId } = useContext(carsContext)
   const cookies = parseCookies()
   const token = cookies["@token"]
   return (
@@ -29,17 +30,21 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             <span className="text-gray-300 text-xs">{comment.createdAt}</span>
           </div>
           <div className="relative">
-           {token &&
-            <button onClick={()=> setOpen(prev => !prev)}>...</button>
-           }
-            
-             {
+            {token &&
+              <button onClick={() => setOpen(prev => !prev)}>...</button>
+            }
+
+            {
               open &&
               <span className="flex flex-col absolute w-20 h-20 bg-white top-[31px] left-[-66px] items-end">
-                <button><BsTrash className=" hover:text-red-600" color="text-red-600" onClick={()=> deleteComment(comment.id)}/></button>
+                <button><BsTrash className=" hover:text-red-600" color="text-red-600" onClick={() => deleteComment(comment.id)} /></button>
+                <button><MdOutlineUpdate className=" hover:text-purple-900" onClick={() => {
+                  setOpenModalUpComments(!openModalUpComments)
+                  setCommentId([comment.id, comment.description])
+                }} /></button>
               </span>
-             }
-            </div>
+            }
+          </div>
         </div>
         <p className="text-gray-200 text-sm mt-3">{comment.description}</p>
       </li>
