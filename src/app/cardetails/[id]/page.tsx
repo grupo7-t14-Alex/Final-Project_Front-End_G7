@@ -16,7 +16,9 @@ import Link from "next/link";
 import ModalUpComent from "@/components/modal/modalUpComent";
 
 const CarDetails = ({ params }: { params: { id: string } }) => {
+
   const { token, user, createComment } = useContext(AuthContext);
+  
   const userData: Seller = user;
 
   const { getCarDetails, CarDetails, openModalUpComments } = useContext(carsContext);
@@ -96,6 +98,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
                     })}
                   </p>
                 </div>
+
                 <a className="button-buy flex items-center justify-center" href="https://api.whatsapp.com/send?phone=55981590019" target="_blank" rel="noopener noreferrer">Comprar</a>
               </div>
               <div className="car-description">
