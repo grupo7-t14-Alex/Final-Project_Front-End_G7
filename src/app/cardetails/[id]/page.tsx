@@ -96,7 +96,7 @@ const CarDetails = ({ params }: { params: { id: string } }) => {
                     })}
                   </p>
                 </div>
-                <button className="button-buy">Comprar</button>
+                <a className="button-buy flex items-center justify-center" href="https://api.whatsapp.com/send?phone=55981590019" target="_blank" rel="noopener noreferrer">Comprar</a>
               </div>
               <div className="car-description">
                 <h1 className="text-gray-100 text-xl font-semibolt">
