@@ -12,9 +12,15 @@ interface CommentCardProps {
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
   const [open , setOpen] = useState(false)
+  const [verifyUser , setVerifyUser] = useState(false)
+
   const {deleteComment} = useContext(carsContext)
   const cookies = parseCookies()
   const token = cookies["@token"]
+  const userId = cookies["@id"];
+
+ 
+
   return (
     <>
       <li className="w-full max-w-[663px] h-52 gap-5 mt-4">
@@ -29,8 +35,8 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             <span className="text-gray-300 text-xs">{comment.createdAt}</span>
           </div>
           <div className="relative">
-           {token &&
-            <button onClick={()=> setOpen(prev => !prev)}>...</button>
+           {userId === comment.user.id ?
+            <button onClick={()=> setOpen(prev => !prev)}>...</button> : null
            }
             
              {
