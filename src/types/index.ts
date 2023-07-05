@@ -24,6 +24,7 @@ export interface CarProps {
 
 interface UserCommentsProps {
     name: string;
+    id: string;
 }
 
 export interface CommentsData {

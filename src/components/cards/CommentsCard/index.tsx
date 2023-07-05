@@ -12,10 +12,17 @@ interface CommentCardProps {
 }
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
+
+
   const [open, setOpen] = useState(false)
   const { deleteComment, openModalUpComments, setOpenModalUpComments, setCommentId } = useContext(carsContext)
+
   const cookies = parseCookies()
-  const token = cookies["@token"]
+  
+  const userId = cookies["@id"];
+
+ 
+
   return (
     <>
       <li className="w-full max-w-[663px] h-52 gap-5 mt-4">
@@ -30,11 +37,13 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
             <span className="text-gray-300 text-xs">{comment.createdAt}</span>
           </div>
           <div className="relative">
-            {token &&
-              <button onClick={() => setOpen(prev => !prev)}>...</button>
-            }
 
-            {
+           {userId === comment.user.id ?
+            <button onClick={()=> setOpen(prev => !prev)}>...</button> : null
+           }
+            
+             {
+
               open &&
               <span className="flex flex-col absolute w-20 h-20 bg-white top-[31px] left-[-66px] items-end">
                 <button><BsTrash className=" hover:text-red-600" color="text-red-600" onClick={() => deleteComment(comment.id)} /></button>
