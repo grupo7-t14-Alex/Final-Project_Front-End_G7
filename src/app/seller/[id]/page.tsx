@@ -44,10 +44,9 @@ interface Cars {
 }
 
 const SellerProfile = async ({ params }: { params: { id: string } }) => {
-
-  const { user, findSeller, protectRoutes, openModalUpAddress, openModalUp } = useContext(AuthContext);
+  const { user, findSeller, protectRoutes, openModalUpAddress, openModalUp } =
+    useContext(AuthContext);
   const { openModalUpCars } = useContext(carsContext);
-
 
   protectRoutes();
 
@@ -55,7 +54,6 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
   const seller: Seller = await findSeller(sellerId);
 
   const currentUser: Seller = user;
-
 
   return (
     <>
@@ -75,13 +73,21 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
         <UserInfos seller={seller} sellerId={sellerId} />
 
         <ul className="w-[90%] h-500 my-24 flex flex-row overflow-x-auto items-center justify-start gap-8 md:flex-wrap md:h-max">
-          {currentUser.id === seller.id
-            ? seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
-            : seller.cars.map((car) =>
-              car.published ? (
-                <UserCard key={car.id} car={car} seller={seller} />
-              ) : null
-            )}
+          {seller.cars.length ? (
+            currentUser.id === seller.id ? (
+              seller.cars.map((car) => <SellerCard key={car.id} car={car} />)
+            ) : (
+              seller.cars.map((car) =>
+                car.published ? (
+                  <UserCard key={car.id} car={car} seller={seller} />
+                ) : null
+              )
+            )
+          ) : (
+            <h1 className="flex self-center text-3xl font-bold mt-12 mb-12">
+              Ainda não há carros cadastrados
+            </h1>
+          )}
         </ul>
         <span className="flex flex-row justify-center gap-4 line-clamp-1">
           1
@@ -104,9 +110,7 @@ const SellerProfile = async ({ params }: { params: { id: string } }) => {
       <Footer />
       {openModalUpAddress && <ModalUpAddress />}
       {openModalUp && <ModalUpUser />}
-      {
-        openModalUpCars && <ModalUpCars />
-      }
+      {openModalUpCars && <ModalUpCars />}
     </>
   );
 };
